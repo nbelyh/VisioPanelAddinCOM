@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="ProjectGroup" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+  <TemplateData>
+    <Name>Visio Panel COM Addin</Name>
+    <DefaultName>VisioPanelAddin</DefaultName>
+    <Description>Creates Visio COM Addin Project and WiX installer project</Description>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    <Icon>icon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectCollection>
+      <ProjectTemplateLink ProjectName="$safeprojectname$">
+        Addin\Template.vstemplate
+      </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="Setup">
+        Setup\Setup.vstemplate
+      </ProjectTemplateLink>
+    </ProjectCollection>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>PanelAddinWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=503912e9bf77d51f</Assembly>
+    <FullClassName>PanelAddinWizard.RootWizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>
