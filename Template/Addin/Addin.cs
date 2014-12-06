@@ -44,8 +44,8 @@ namespace $csprojectname$
                 case "Command1":    // make command1 always enabled
                     return true;
 
-                case "Command2":    // make command2 enabled only if a shape is selected
-                    return Application != null && Application.ActiveWindow != null && Application.ActiveWindow.Selection.Count > 0;
+                case "Command2":    // make command2 enabled only if a drawing is opened
+                    return Application != null && Application.ActiveWindow != null;
                 $endif$$if$ ($taskpaneANDui$ == true)
                 case "TogglePanel": // make panel enabled only if we have an open drawing.
                     return IsPanelEnabled();
