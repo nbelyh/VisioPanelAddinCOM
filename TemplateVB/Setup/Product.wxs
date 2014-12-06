@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?define Version="1.0.0.0"?>
+
+  <?if $(var.Platform)=x64 ?>
+  <?define Win64YesNo="yes" ?>
+  <?define UpgradeCode = "{$guid5$}" ?>
+  <?define pf="ProgramFiles64Folder" ?>
+  <?else ?>
+  <?define Win64YesNo="no" ?>
+  <?define UpgradeCode = "{$guid6$}" ?>
+  <?define pf="ProgramFilesFolder" ?>
+  <?endif ?>
+
+  <Product Id="*" Name="$csprojectname$ Setup" Language="1033" Version="$(var.Version)" Manufacturer="UnmanagedVisio" UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="$(var.Platform)" />
+
+    <!-- check taht .NET 4 (client profile at least) is installed -->
+    <PropertyRef Id="NETFRAMEWORK40CLIENT" />
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40CLIENT]]>
+    </Condition>
+
+    <!-- allow major upgrades -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Setup" Level="1">
+      <ComponentRef Id="$csprojectname$.dll" />
+      <ComponentRef Id="$csprojectname$.registration" />
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir"/>
+
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.pf)">
+        <Directory Id="INSTALLFOLDER" Name="$csprojectname$">
+
+          <Component Id="$csprojectname$.dll" Win64="$(var.Win64YesNo)">
+            <Class Id="{$clsid$}" Context="InprocServer32" Description="$progid$" ThreadingModel="both" ForeignServer="mscoree.dll">
+              <ProgId Id="$progid$" Description="$progid$" />
+            </Class>
+            <File Id="$csprojectname$.dll" KeyPath="yes" Source="$(var.$csprojectname$.TargetPath)" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32\1.0.0.0" Name="Class" Value="$csprojectname$.Addin" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32\1.0.0.0" Name="Assembly" Value="$csprojectname$, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32\1.0.0.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32\1.0.0.0" Name="CodeBase" Value="file:///[#$csprojectname$.dll]" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32" Name="Class" Value="$csprojectname$.Addin" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32" Name="Assembly" Value="$csprojectname$, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32" Name="CodeBase" Value="file:///[#$csprojectname$.dll]" Type="string" Action="write" />
+            <RegistryValue Root="HKCR" Key="Component Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Name="0" Value=".NET Category" Type="string" Action="write" />
+          </Component>
+
+          <Component Id="$csprojectname$.registration" Win64="$(var.Win64YesNo)">
+            <RegistryKey Root="HKMU" Key="Software\Microsoft\Visio\Addins\$progid$">
+              <RegistryValue Name="CommandLineSafe" Type="integer" Value="0" />
+              <RegistryValue Name="FriendlyName" Type="string" Value="$csprojectname$" KeyPath="yes" />
+              <RegistryValue Name="LoadBehavior" Type="integer" Value="3" />
+            </RegistryKey>
+          </Component>
+
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+</Wix>
