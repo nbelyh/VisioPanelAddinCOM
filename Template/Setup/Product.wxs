@@ -31,7 +31,10 @@
       <ComponentRef Id="$csprojectname$.dll" />
       <ComponentRef Id="$csprojectname$.registration" />
     </Feature>
-    
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir"/>
+
   </Product>
 
   <Fragment>
