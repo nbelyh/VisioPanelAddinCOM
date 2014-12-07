@@ -3,14 +3,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{F184B08F-C81C-45f6-A57F-5ABD9991F28F}</ProjectTypeGuids>
     <ProjectGuid>{75B8D080-8DB7-4418-91FB-5E0501ACFEC1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TemplateVB</RootNamespace>
     <AssemblyName>TemplateVB</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
@@ -25,43 +29,30 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <VSTemplate Include="Template.vstemplate">
-      <SubType>Designer</SubType>
-    </VSTemplate>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Addin\Addin.vb" />
+    <Content Include="Addin\Addin.vbproj" />
     <Content Include="Addin\AddinCommandBars.vb" />
     <Content Include="Addin\AddinConnect.vb" />
     <Content Include="Addin\AddinRibbon.vb" />
     <Content Include="Addin\PanelFrame.vb" />
     <Content Include="Addin\PanelManager.vb" />
-    <Content Include="Addin\My Project\AssemblyInfo.vb" />
-    <Content Include="Addin\My Project\Resources.resx" />
-    <Content Include="Addin\My Project\Resources.Designer.vb" />
-    <Content Include="Addin\My Project\Application.myapp" />
-    <Content Include="Addin\My Project\Application.Designer.vb" />
     <Content Include="Addin\TheForm.vb" />
     <Content Include="Addin\TheForm.Designer.vb" />
-    <Content Include="My Project\AssemblyInfo.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Addin\Addin.vbproj" />
+    <Content Include="Addin\TheForm.resx" />
     <Content Include="Addin\icon.ico" />
     <Content Include="Addin\Interop\Microsoft.Office.Interop.Visio.dll" />
     <Content Include="Addin\Interop\OFFICE.DLL" />
@@ -79,11 +70,16 @@
     <Content Include="Setup\Setup.wixproj">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Addin\My Project\AssemblyInfo.vb" />
+    <Content Include="Addin\My Project\Resources.resx" />
+    <Content Include="Addin\My Project\Application.Designer.vb" />
+    <Content Include="Addin\My Project\Resources.Designer.vb" />
+    <Content Include="Addin\My Project\Application.myapp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Addin\TheForm.resx" />
+    <VSTemplate Include="Template.vstemplate" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

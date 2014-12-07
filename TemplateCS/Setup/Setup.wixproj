@@ -30,11 +30,9 @@
     <OutputPath>bin\$(Configuration)\$(Platform)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\$(Platform)\</IntermediateOutputPath>
   </PropertyGroup>
-  $if$ ($taskpane$ == true)
   <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
-  $endif$
   <ItemGroup>
     <ProjectReference Include="..\$csprojectname$\$csprojectname$.csproj">
       <Name>$csprojectname$</Name>

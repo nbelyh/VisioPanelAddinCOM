@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="ProjectGroup" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
-    <Name>Visio Panel COM Addin</Name>
+    <Name>Visio C# Panel COM Addin</Name>
     <DefaultName>VisioPanelAddin</DefaultName>
     <Description>Creates Visio COM Addin Project and WiX installer project</Description>
     <ProjectType>CSharp</ProjectType>

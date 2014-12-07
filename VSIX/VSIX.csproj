@@ -41,22 +41,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TemplateCS\TemplateCS.csproj">
-      <Project>{5133DED2-2448-4536-8F18-8FD6E50EAD4D}</Project>
-      <Name>Template</Name>
-      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <TemplateType>Project</TemplateType>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
-    </ProjectReference>
-    <ProjectReference Include="..\Wizard\PanelAddinWizard.csproj">
-      <Project>{B214D62D-7872-4D80-9387-ABBFAAF57A2C}</Project>
-      <Name>PanelAddinWizard</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -68,6 +52,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TemplateCS\TemplateCS.csproj">
+      <Project>{5133DED2-2448-4536-8F18-8FD6E50EAD4D}</Project>
+      <Name>TemplateCS</Name>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <TemplateType>Project</TemplateType>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+    </ProjectReference>
+    <ProjectReference Include="..\TemplateVB\TemplateVB.vbproj">
+      <Project>{75B8D080-8DB7-4418-91FB-5E0501ACFEC1}</Project>
+      <Name>TemplateVB</Name>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <TemplateType>Project</TemplateType>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+    </ProjectReference>
+    <ProjectReference Include="..\Wizard\PanelAddinWizard.csproj">
+      <Project>{B214D62D-7872-4D80-9387-ABBFAAF57A2C}</Project>
+      <Name>PanelAddinWizard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" />

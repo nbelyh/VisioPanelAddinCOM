@@ -30,7 +30,7 @@ Partial Public Class Addin
 
     Private _updateRequest As Boolean
 
-    Friend Sub UpdateCommandBars()
+    Sub UpdateCommandBars()
         _updateRequest = True
     End Sub
 

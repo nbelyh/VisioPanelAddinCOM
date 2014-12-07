@@ -1,15 +1,17 @@
-Imports System.Drawing
-Imports System.Windows.Forms
+$if$ ($ui$ == true)Imports System.Drawing
+$endif$$if$ ($ribbonANDcommandbars$ == true)Imports System.Globalization
+$endif$$if$ ($ui$ == true)Imports System.Windows.Forms
+$endif$
 
 Partial Public Class Addin
     Public Property Application As Microsoft.Office.Interop.Visio.Application
-    
+    $if$ ($ui$ == true)
     ''' 
     ''' Callback called by the UI manager when user clicks a button
     ''' Should do something meaninful wehn corresponding action is called.
     ''' 
     Public Sub OnCommand(commandId As String)
-        Select Case commandId
+        Select commandId
             Case "Command1"
                 MessageBox.Show(commandId)
                 Return
@@ -17,11 +19,11 @@ Partial Public Class Addin
             Case "Command2"
                 MessageBox.Show(commandId)
                 Return
-
+			$endif$$if$ ($taskpaneANDui$ == true)
             Case "TogglePanel"
                 TogglePanel()
                 Return
-        End Select
+        $endif$$if$ ($ui$ == true)End Select
     End Sub
 
     ''' 
@@ -38,12 +40,11 @@ Partial Public Class Addin
             Case "Command2"
                 ' make command2 enabled only if a window is opened
                 Return Application IsNot Nothing AndAlso Application.ActiveWindow IsNot Nothing
-
+			$endif$$if$ ($taskpaneANDui$ == true)
             Case "TogglePanel"
                 ' make panel enabled only if we have an open drawing.
                 Return IsPanelEnabled()
-            Case Else
-
+            $endif$$if$ ($ui$ == true)Case Else
                 Return True
         End Select
     End Function
@@ -53,12 +54,12 @@ Partial Public Class Addin
     ''' Should return if corresponding command (button) is pressed or not (makes sense for toggle buttons)
     ''' 
     Public Function IsCommandChecked(command As String) As Boolean
-
+		$endif$$if$ ($taskpaneANDui$ == true)
         If command = "TogglePanel" Then
             Return IsPanelVisible()
         End If
 
-        Return False
+        $endif$$if$($ui$ == true)Return False
     End Function
 
     ''' 
@@ -77,7 +78,7 @@ Partial Public Class Addin
     Public Function GetCommandIcon(command As String) As Icon
         Return DirectCast(My.Resources.ResourceManager.GetObject(command), Icon)
     End Function
-
+	$endif$$if$ ($taskpane$ == true)
 #Region "Panel"
 
     Private Sub TogglePanel()
@@ -95,18 +96,25 @@ Partial Public Class Addin
     Private _panelManager As PanelManager
 
 #End Region
-
-    Friend Sub Startup(app As Object)
+	$endif$
+    Sub Startup(app As Object)
         Application = DirectCast(app, Microsoft.Office.Interop.Visio.Application)
-
+		$if$ ($taskpane$ == true)
         _panelManager = New PanelManager(Me)
-    End Sub
+		$endif$$if$ ($ribbonANDcommandbars$ == true)Dim version = Integer.Parse(Application.Version, NumberStyles.AllowDecimalPoint)
+        If (version < 14) Then
+			$endif$$if$ ($commandbars$ == true)StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
+        $endif$$if$ ($ribbonANDcommandbars$ == true)End If
+    $endif$End Sub
 
-    Friend Sub Shutdown()
-        _panelManager.Dispose()
-    End Sub
+    Sub Shutdown()
+	    $if$ ($commandbars$ == true)ShutdownCommandBars()
+        $endif$$if$ ($taskpane$ == true)_panelManager.Dispose()
+    $endif$End Sub
+	$if$ ($ui$ == true)
+    Sub UpdateUI()
+		$endif$$if$ ($commandbars$ == true)UpdateCommandBars()
+        $endif$$if$ ($ribbon$ == true)UpdateRibbon()
+    $endif$$if$ ($ui$ == true)End Sub
 
-    Friend Sub UpdateUI()
-        UpdateRibbon()
-    End Sub
-End Class
+$endif$End Class

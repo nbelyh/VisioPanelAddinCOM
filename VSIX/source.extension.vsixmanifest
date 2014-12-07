@@ -3,7 +3,7 @@
   <Identifier Id="VisioPanelAddinCOM.UnmanagedVisio">
     <Name>Visio COM Panel Addin Project</Name>
     <Author>Nikolay Belykh</Author>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Description xml:space="preserve">Creates a Microsoft Visio COM Add-in which is compatible with most Vision versions, and WiX installer for the COM Addin.</Description>
     <Locale>1033</Locale>
     <License>license.txt</License>

@@ -6,7 +6,7 @@ $endif$using Visio = Microsoft.Office.Interop.Visio;
 
 namespace $csprojectname$
 {
-    public$if$ ($ui$ == true) partial$endif$ class Addin
+    public partial class Addin
     {
         public Visio.Application Application { get; set; }
         $if$ ($ui$ == true)

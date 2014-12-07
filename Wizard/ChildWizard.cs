@@ -48,7 +48,7 @@ namespace PanelAddinWizard
 
         public void ProjectFinishedGenerating(Project project)
         {
-            if (Path.GetExtension(project.FileName) == ".csproj")
+            if (Path.GetExtension(project.FileName) == ".csproj" || Path.GetExtension(project.FileName) == ".vbproj")
                 RootWizard.GlobalDictionary["$csprojectguid$"] = GetProjectGuid(project);
         }
 
