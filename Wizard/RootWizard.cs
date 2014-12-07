@@ -29,10 +29,11 @@ namespace PanelAddinWizard
         {
             _dte = automationObject as DTE2;
 
-            var wizardForm = new WizardForm();
-
-            wizardForm.TaskPane = true;
-            wizardForm.Ribbon = true;
+            var wizardForm = new WizardForm
+            {
+                TaskPane = true, 
+                Ribbon = true
+            };
 
             if (wizardForm.ShowDialog() == DialogResult.Cancel)
                 throw new WizardBackoutException();
@@ -53,7 +54,8 @@ namespace PanelAddinWizard
             GlobalDictionary["$commandbarsANDtaskpane$"] = wizardForm.CommandBars && wizardForm.TaskPane ? "true" : "false";
             GlobalDictionary["$taskpane$"] = wizardForm.TaskPane ? "true" : "false";
             GlobalDictionary["$ui$"] = (wizardForm.CommandBars || wizardForm.Ribbon) ? "true" : "false";
-            GlobalDictionary["$taskpaneANDui$"] = wizardForm.TaskPane && (wizardForm.CommandBars || wizardForm.Ribbon) ? "true" : "false";
+            GlobalDictionary["$taskpaneANDui$"] = (wizardForm.TaskPane && (wizardForm.CommandBars || wizardForm.Ribbon)) ? "true" : "false";
+            GlobalDictionary["$taskpaneORui$"] = (wizardForm.TaskPane || (wizardForm.CommandBars || wizardForm.Ribbon)) ? "true" : "false";
         }
 
         static void GetVisioPath(RegistryKey key, string version, ref string path)
@@ -114,9 +116,10 @@ namespace PanelAddinWizard
                     }
                 }
             }
-	        catch (Exception e)
+            // this convenience feature; continue if failed, not a big deal
+            // ReSharper disable once EmptyGeneralCatchClause
+	        catch (Exception)
 	        {
-                LogException(_dte, e);
 	        }
 	    }
 
@@ -124,12 +127,6 @@ namespace PanelAddinWizard
         {
             SetActiveConfiguration();
         }
-
-	    public static void LogException(DTE2 dte, Exception e)
-	    {
-	        var pane = dte.ToolWindows.OutputWindow.OutputWindowPanes.Item("Debug");
-	        pane.OutputString(string.Format("Unable to set active configuration: {0}", e.Message));
-	    }
 
 	    public void BeforeOpeningFile(ProjectItem projectItem)
         {

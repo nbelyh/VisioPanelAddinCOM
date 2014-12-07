@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using EnvDTE;
-using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TemplateWizard;
-using Microsoft.Win32;
 
 namespace PanelAddinWizard
 {
@@ -15,15 +13,11 @@ namespace PanelAddinWizard
 
     public class ChildWizard : IWizard
     {
-        private DTE2 _dte;
-
         // Retrieve global replacement parameters
         public void RunStarted(object automationObject, 
             Dictionary<string, string> replacementsDictionary, 
             WizardRunKind runKind, object[] customParams)
         {
-            _dte = automationObject as DTE2;
-
             // Add custom parameters.
             replacementsDictionary.Add("$csprojectname$", RootWizard.GlobalDictionary["$csprojectname$"]);
             replacementsDictionary.Add("$progid$", RootWizard.GlobalDictionary["$progid$"]);
@@ -42,6 +36,7 @@ namespace PanelAddinWizard
             replacementsDictionary.Add("$taskpane$", RootWizard.GlobalDictionary["$taskpane$"]);
             replacementsDictionary.Add("$ui$", RootWizard.GlobalDictionary["$ui$"]);
             replacementsDictionary.Add("$taskpaneANDui$", RootWizard.GlobalDictionary["$taskpaneANDui$"]);
+            replacementsDictionary.Add("$taskpaneORui$", RootWizard.GlobalDictionary["$taskpaneORui$"]);
         }
 
         public void RunFinished()
@@ -84,9 +79,10 @@ namespace PanelAddinWizard
                     }
                 }
             }
-            catch (Exception e)
+            // this convenience feature; continue if failed, not a big deal
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch (Exception)
             {
-                RootWizard.LogException(_dte, e);   
             }
         }
 

@@ -59,17 +59,7 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        '''</summary>
-        Friend ReadOnly Property Command1() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Command1", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
+  $if$ ($ui$ == true)
         '''<summary>
         '''  Looks up a localized string similar to command 1.
         '''</summary>
@@ -78,17 +68,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Command1_Label", resourceCulture)
             End Get
         End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        '''</summary>
-        Friend ReadOnly Property Command2() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Command2", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-        
+
         '''<summary>
         '''  Looks up a localized string similar to command 2.
         '''</summary>
@@ -97,24 +77,28 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Command2_Label", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
-        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-        '''&lt;customUI xmlns=&quot;http://schemas.microsoft.com/office/2009/07/customui&quot; onLoad=&quot;OnRibbonLoad&quot;&gt;
-        '''  &lt;ribbon&gt;
-        '''    &lt;tabs&gt;
-        '''      &lt;tab idMso=&quot;TabHome&quot;&gt;
-        '''        &lt;group id=&quot;Group1&quot; label=&quot;$csprojectname$&quot;&gt;
-        '''
-        '''          &lt;button id=&quot;Command1&quot; size=&quot;large&quot; getLabel=&quot;OnGetRibbonLabel&quot; onAction=&quot;OnRibbonButtonClick&quot; getEnabled=&quot;IsRibbonCommandEnabled&quot; getImage=&quot;GetRibbonImage&quot; /&gt;
-        '''          &lt;button id=&quot;Command2&quot; size=&quot;large&quot; getLabel=&quot;OnGetRibbonLabel&quot; onAction=&quot;OnRibbonButtonC [rest of string was truncated]&quot;;.
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         '''</summary>
-        Friend ReadOnly Property Ribbon() As String
+        Friend ReadOnly Property Command1() As System.Drawing.Icon
             Get
-                Return ResourceManager.GetString("Ribbon", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Command1", resourceCulture)
+                Return CType(obj, System.Drawing.Icon)
             End Get
         End Property
-        
+
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        '''</summary>
+        Friend ReadOnly Property Command2() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Command2", resourceCulture)
+                Return CType(obj, System.Drawing.Icon)
+            End Get
+        End Property
+  $endif$
+  $if$ ($taskpaneANDui$ == true)
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         '''</summary>
@@ -133,5 +117,24 @@ Namespace My.Resources
                 Return ResourceManager.GetString("TogglePanel_Label", resourceCulture)
             End Get
         End Property
+  $endif$
+  $if$ ($ribbon$ == true)
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        '''&lt;customUI xmlns=&quot;http://schemas.microsoft.com/office/2009/07/customui&quot; onLoad=&quot;OnRibbonLoad&quot;&gt;
+        '''  &lt;ribbon&gt;
+        '''    &lt;tabs&gt;
+        '''      &lt;tab idMso=&quot;TabHome&quot;&gt;
+        '''        &lt;group id=&quot;Group1&quot; label=&quot;$csprojectname$&quot;&gt;
+        '''
+        '''          &lt;button id=&quot;Command1&quot; size=&quot;large&quot; getLabel=&quot;OnGetRibbonLabel&quot; onAction=&quot;OnRibbonButtonClick&quot; getEnabled=&quot;IsRibbonCommandEnabled&quot; getImage=&quot;GetRibbonImage&quot; /&gt;
+        '''          &lt;button id=&quot;Command2&quot; size=&quot;large&quot; getLabel=&quot;OnGetRibbonLabel&quot; onAction=&quot;OnRibbonButtonC [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Ribbon() As String
+            Get
+                Return ResourceManager.GetString("Ribbon", resourceCulture)
+            End Get
+        End Property
+  $endif$
     End Module
 End Namespace

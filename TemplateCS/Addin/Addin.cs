@@ -120,11 +120,11 @@ namespace $csprojectname$
             $if$ ($commandbars$ == true)ShutdownCommandBars();
             $endif$$if$ ($taskpane$ == true)_panelManager.Dispose();
         $endif$}
-        $if$ ($ui$ == true)
+        $if$ ($taskpaneORui$ == true)
         internal void UpdateUI()
         {
             $endif$$if$ ($commandbars$ == true) UpdateCommandBars();
             $endif$$if$ ($ribbon$ == true)UpdateRibbon();
-        $endif$$if$ ($ui$ == true)}
+        $endif$$if$ ($taskpaneORui$ == true)}
     $endif$}
 }

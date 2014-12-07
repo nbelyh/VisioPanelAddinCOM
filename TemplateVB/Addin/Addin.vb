@@ -111,10 +111,10 @@ Partial Public Class Addin
 	    $if$ ($commandbars$ == true)ShutdownCommandBars()
         $endif$$if$ ($taskpane$ == true)_panelManager.Dispose()
     $endif$End Sub
-	$if$ ($ui$ == true)
+	$if$ ($taskpaneORui$ == true)
     Sub UpdateUI()
 		$endif$$if$ ($commandbars$ == true)UpdateCommandBars()
         $endif$$if$ ($ribbon$ == true)UpdateRibbon()
-    $endif$$if$ ($ui$ == true)End Sub
+    $endif$$if$ ($taskpaneORui$ == true)End Sub
 
 $endif$End Class
