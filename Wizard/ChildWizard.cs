@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TemplateWizard;
+using Microsoft.Win32;
 
 namespace PanelAddinWizard
 {
@@ -13,11 +15,15 @@ namespace PanelAddinWizard
 
     public class ChildWizard : IWizard
     {
+        private DTE2 _dte;
+
         // Retrieve global replacement parameters
         public void RunStarted(object automationObject, 
             Dictionary<string, string> replacementsDictionary, 
             WizardRunKind runKind, object[] customParams)
         {
+            _dte = automationObject as DTE2;
+
             // Add custom parameters.
             replacementsDictionary.Add("$csprojectname$", RootWizard.GlobalDictionary["$csprojectname$"]);
             replacementsDictionary.Add("$progid$", RootWizard.GlobalDictionary["$progid$"]);
@@ -49,7 +55,39 @@ namespace PanelAddinWizard
         public void ProjectFinishedGenerating(Project project)
         {
             if (Path.GetExtension(project.FileName) == ".csproj" || Path.GetExtension(project.FileName) == ".vbproj")
+            {
                 RootWizard.GlobalDictionary["$csprojectguid$"] = GetProjectGuid(project);
+                SetStartupAction(project);
+            }
+        }
+
+        private void SetStartupAction(Project project)
+        {
+            try
+            {
+                var path32 = RootWizard.GetVisioPath32();
+                var path64 = RootWizard.GetVisioPath64();
+
+                var configManager = project.ConfigurationManager;
+                for (var i = 1; i <= configManager.Count; ++i)
+                {
+                    var config = configManager.Item(i);
+                    if (config.PlatformName == "x86" && path32 != null)
+                    {
+                        config.Properties.Item("StartAction").Value = 1;
+                        config.Properties.Item("StartProgram").Value = path32;
+                    }
+                    if (config.PlatformName == "x64" && path64 != null)
+                    {
+                        config.Properties.Item("StartAction").Value = 1;
+                        config.Properties.Item("StartProgram").Value = path64;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                RootWizard.LogException(_dte, e);   
+            }
         }
 
         public static string GetProjectGuid(Project project)
