@@ -2,6 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <?define Version="1.0.0.0"?>
+  <?define ProductCode = "{$guid7$}" ?>
 
   <?if $(var.Platform)=x64 ?>
   <?define Win64YesNo="yes" ?>
@@ -13,7 +14,7 @@
   <?define pf="ProgramFilesFolder" ?>
   <?endif ?>
 
-  <Product Id="*" Name="$csprojectname$ Setup" Language="1033" Version="$(var.Version)" Manufacturer="UnmanagedVisio" UpgradeCode="$(var.UpgradeCode)">
+  <Product Id="$(var.ProductCode)" Name="$csprojectname$ Setup" Language="1033" Version="$(var.Version)" Manufacturer="UnmanagedVisio" UpgradeCode="$(var.UpgradeCode)">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="$(var.Platform)" />
 
     <!-- check taht .NET 4 (client profile at least) is installed -->
