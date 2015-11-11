@@ -213,3 +213,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+VisioWixExtension/wixext/Data/Messages.cs
+*.exe

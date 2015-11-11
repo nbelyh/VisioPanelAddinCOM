@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
-    <Name>Visio C# Panel Addin Project</Name>
+    <Name>Extended Visio C# COM Addin Project</Name>
     <Description>Creates Visio Panel Addin Project</Description>
     <ProjectType>CSharp</ProjectType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1001</SortOrder>
     <TemplateID>761A71AE-E024-482E-9B35-1D4455F599FF</TemplateID>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>VisioPanelAddin</DefaultName>
+    <DefaultName>ExtendedVisioAddin</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
-    <Icon>icon.ico</Icon>
+    <Icon>IconCS.ico</Icon>
   </TemplateData>
   <TemplateContent>
     <Project File="Addin.csproj" ReplaceParameters="true">
@@ -20,9 +20,12 @@
         <ProjectItem ReplaceParameters="true">AssemblyInfo.cs</ProjectItem>
       </Folder>
       <Folder Name="Resources" TargetFolderName="Resources">
-        <ProjectItem ReplaceParameters="false">Command1.ico</ProjectItem>
-        <ProjectItem ReplaceParameters="false">Command2.ico</ProjectItem>
-        <ProjectItem ReplaceParameters="false">TogglePanel.ico</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command1.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command2.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command1_sm.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command2_sm.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">TogglePanel.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">TogglePanel_sm.png</ProjectItem>
         <ProjectItem ReplaceParameters="true">Ribbon.xml</ProjectItem>
       </Folder>
       <Folder Name="Interop" TargetFolderName="Interop">

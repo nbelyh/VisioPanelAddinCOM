@@ -18,6 +18,16 @@ namespace PanelAddinWizard
             Dictionary<string, string> replacementsDictionary, 
             WizardRunKind runKind, object[] customParams)
         {
+            if (replacementsDictionary["$safeprojectname$"] == "Setup")
+            {
+                if (RootWizard.GlobalDictionary["$wixSetup$"] != "true")
+                    throw new WizardBackoutException("Cancel generation of wix setup project");
+            }
+            else if (RootWizard.GlobalDictionary["$addinProject$"] != "true")
+            {
+                throw new WizardBackoutException("Cancel generation of addin project");
+            }
+
             // Add custom parameters.
             replacementsDictionary.Add("$csprojectname$", RootWizard.GlobalDictionary["$csprojectname$"]);
             replacementsDictionary.Add("$progid$", RootWizard.GlobalDictionary["$progid$"]);
@@ -30,13 +40,31 @@ namespace PanelAddinWizard
             replacementsDictionary.Add("$ribbon$", RootWizard.GlobalDictionary["$ribbon$"]);
             replacementsDictionary.Add("$commandbars$", RootWizard.GlobalDictionary["$commandbars$"]);
 
-            replacementsDictionary.Add("$ribbonORcommandbars$", RootWizard.GlobalDictionary["$ribbonORcommandbars$"]);
             replacementsDictionary.Add("$ribbonANDcommandbars$", RootWizard.GlobalDictionary["$ribbonANDcommandbars$"]);
             replacementsDictionary.Add("$commandbarsANDtaskpane$", RootWizard.GlobalDictionary["$commandbarsANDtaskpane$"]);
             replacementsDictionary.Add("$taskpane$", RootWizard.GlobalDictionary["$taskpane$"]);
+
             replacementsDictionary.Add("$ui$", RootWizard.GlobalDictionary["$ui$"]);
             replacementsDictionary.Add("$taskpaneANDui$", RootWizard.GlobalDictionary["$taskpaneANDui$"]);
             replacementsDictionary.Add("$taskpaneORui$", RootWizard.GlobalDictionary["$taskpaneORui$"]);
+
+            replacementsDictionary.Add("$uiCallbacks$", RootWizard.GlobalDictionary["$uiCallbacks$"]);
+            replacementsDictionary.Add("$taskpaneANDuiCallbacks$", RootWizard.GlobalDictionary["$taskpaneANDuiCallbacks$"]);
+
+            replacementsDictionary.Add("$ribbonComponent$", RootWizard.GlobalDictionary["$ribbonComponent$"]);
+            replacementsDictionary.Add("$ribbonXml$", RootWizard.GlobalDictionary["$ribbonXml$"]);
+
+            replacementsDictionary.Add("$office$", RootWizard.GlobalDictionary["$office$"]);
+
+            replacementsDictionary.Add("$visioFilesWxs$", RootWizard.GlobalDictionary["$visioFilesWxs$"]);
+            replacementsDictionary.Add("$visioFilesWixProj$", RootWizard.GlobalDictionary["$visioFilesWixProj$"]);
+            replacementsDictionary.Add("$defaultVisioFiles$", RootWizard.GlobalDictionary["$defaultVisioFiles$"]);
+
+            replacementsDictionary.Add("$addinProject$", RootWizard.GlobalDictionary["$addinProject$"]);
+            replacementsDictionary.Add("$WixUI$", RootWizard.GlobalDictionary["$WixUI$"]);
+            replacementsDictionary.Add("$EnableWixUI$", RootWizard.GlobalDictionary["$EnableWixUI$"]);
+            replacementsDictionary.Add("$EnableLicense$", RootWizard.GlobalDictionary["$EnableLicense$"]);
+            replacementsDictionary.Add("$LicenseFileName$", RootWizard.GlobalDictionary["$LicenseFileName$"]);
         }
 
         public void RunFinished()
@@ -54,6 +82,28 @@ namespace PanelAddinWizard
                 RootWizard.GlobalDictionary["$csprojectguid$"] = GetProjectGuid(project);
                 SetStartupAction(project);
             }
+
+            if (Path.GetExtension(project.FileName) == ".wixproj")
+            {
+                var projectPath = Path.GetDirectoryName(project.FullName);
+
+                GenerateVisioFiles(projectPath, RootWizard.SetupOptions);
+            }
+        }
+
+        void GenerateVisioFiles(string projectPath, WixSetupOptions options)
+        {
+            if (options.EnableLicense)
+                File.Copy(options.LicenseFilePath, Path.Combine(projectPath, Path.GetFileName(options.LicenseFilePath)));
+
+            if (!options.HaveVisioFiles)
+                return;
+
+            foreach (var path in options.VisioFilePaths)
+            {
+                if (options.DuplicateExistingVisioFiles)
+                    File.Copy(path, Path.Combine(projectPath, Path.GetFileName(path)));
+            }
         }
 
         private void SetStartupAction(Project project)
@@ -67,12 +117,12 @@ namespace PanelAddinWizard
                 for (var i = 1; i <= configManager.Count; ++i)
                 {
                     var config = configManager.Item(i);
-                    if (config.PlatformName == "x86" && path32 != null)
+                    if (path32 != null)
                     {
                         config.Properties.Item("StartAction").Value = 1;
                         config.Properties.Item("StartProgram").Value = path32;
                     }
-                    if (config.PlatformName == "x64" && path64 != null)
+                    if (path64 != null)
                     {
                         config.Properties.Item("StartAction").Value = 1;
                         config.Properties.Item("StartProgram").Value = path64;
