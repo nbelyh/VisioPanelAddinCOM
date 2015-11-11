@@ -144,7 +144,7 @@ namespace $csprojectname$
             UpdateUI();
         }
         $endif$
-        private void Startup(object application)
+        public void Startup()
         {
             $if$ ($taskpane$ == true)_panelManager = new PanelManager(this);
             $endif$$if$ ($ribbonANDcommandbars$ == true)var version = int.Parse(Application.Version, NumberStyles.AllowDecimalPoint);
@@ -154,7 +154,7 @@ namespace $csprojectname$
             $endif$
 		}
 
-        private void Shutdown()
+        public void Shutdown()
         {
             $if$ ($commandbars$ == true)AddinUI.ShutdownCommandBars();
             $endif$$if$ ($taskpane$ == true)_panelManager.Dispose();
@@ -168,7 +168,7 @@ namespace $csprojectname$
     [ProgId("$csprojectname$.Addin")]
     public partial class AddinUI : Extensibility.IDTExtensibility2
     {
-        ThisAddIn ThisAddIn { get { return Globals.ThisAddIn; } }
+        ThisAddIn ThisAddIn { get; set; }
 
         #region IDTExtensibility2
 
