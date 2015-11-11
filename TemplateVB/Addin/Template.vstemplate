@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
-    <Name>Visio VB Panel Addin Project</Name>
-    <Description>Creates Visio Panel Addin Project</Description>
+    <Name>Extended Visio VB.NET COM Addin Project</Name>
+    <Description>Creates Extended Visio VB.NET COM Addin Project</Description>
     <ProjectType>VisualBasic</ProjectType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1001</SortOrder>
-    <TemplateID>F4B11CD2-3240-40FF-A681-F1DEA5804D7A</TemplateID>
+    <TemplateID>8C21B542-7A75-4F49-A97B-F46D65462E20</TemplateID>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>VisioPanelAddin</DefaultName>
+    <DefaultName>ExtendedVisioAddin</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
-    <Icon>icon.ico</Icon>
+    <Icon>IconVB.ico</Icon>
   </TemplateData>
   <TemplateContent>
     <Project File="Addin.vbproj" ReplaceParameters="true">
@@ -22,17 +22,19 @@
         <ProjectItem ReplaceParameters="true">AssemblyInfo.vb</ProjectItem>
       </Folder>
       <Folder Name="Resources" TargetFolderName="Resources">
-        <ProjectItem ReplaceParameters="false">Command1.ico</ProjectItem>
-        <ProjectItem ReplaceParameters="false">Command2.ico</ProjectItem>
-        <ProjectItem ReplaceParameters="false">TogglePanel.ico</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command1.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command2.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command1_sm.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">Command2_sm.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">TogglePanel.png</ProjectItem>
+        <ProjectItem ReplaceParameters="false">TogglePanel_sm.png</ProjectItem>
         <ProjectItem ReplaceParameters="true">Ribbon.xml</ProjectItem>
       </Folder>
       <Folder Name="Interop" TargetFolderName="Interop">
         <ProjectItem ReplaceParameters="false" TargetFileName="Office.dll">Office.dll</ProjectItem>
         <ProjectItem ReplaceParameters="false" TargetFileName="Microsoft.Office.Interop.Visio.dll">Microsoft.Office.Interop.Visio.dll</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="true">AddinConnect.vb</ProjectItem>
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true">Addin.vb</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true">ThisAddin.vb</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinCommandBars.vb</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinRibbon.vb</ProjectItem>
       <ProjectItem ReplaceParameters="true">PanelFrame.vb</ProjectItem>

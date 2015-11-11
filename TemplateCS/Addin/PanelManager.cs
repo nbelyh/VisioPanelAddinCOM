@@ -10,29 +10,25 @@ namespace $csprojectname$
     /// 
     public class PanelManager : IDisposable
     {
-        private readonly Addin _addin;
-
-        public PanelManager(Addin addin)
+        public PanelManager()
         {
-            _addin = addin;
-
-            _addin.Application.DocumentCreated += OnDocumentListChanged;
-            _addin.Application.DocumentOpened += OnDocumentListChanged;
-            _addin.Application.BeforeDocumentClose += OnDocumentListChanged;
-        }
+            $if$ ($uiCallbacks$ == true)Globals.ThisAddIn.Application.DocumentCreated += OnDocumentListChanged;
+            Globals.ThisAddIn.Application.DocumentOpened += OnDocumentListChanged;
+            Globals.ThisAddIn.Application.BeforeDocumentClose += OnDocumentListChanged;
+        $endif$}
 
         public void Dispose()
         {
-            _addin.Application.DocumentCreated -= OnDocumentListChanged;
-            _addin.Application.DocumentOpened -= OnDocumentListChanged;
-            _addin.Application.BeforeDocumentClose -= OnDocumentListChanged;
-        }
-
+            $if$ ($uiCallbacks$ == true)Globals.ThisAddIn.Application.DocumentCreated -= OnDocumentListChanged;
+            Globals.ThisAddIn.Application.DocumentOpened -= OnDocumentListChanged;
+            Globals.ThisAddIn.Application.BeforeDocumentClose -= OnDocumentListChanged;
+        $endif$}
+        $if$ ($uiCallbacks$ == true)
         private void OnDocumentListChanged(Visio.Document doc)
         {
-            _addin.UpdateUI();
+            Globals.ThisAddIn.UpdateUI();
         }
-
+        $endif$
         private readonly Dictionary<int, PanelFrame> _panelFrames =
             new Dictionary<int, PanelFrame>();
 
@@ -67,16 +63,16 @@ namespace $csprojectname$
                 panelFrame.DestroyWindow();
                 _panelFrames.Remove(window.ID);
             }
-
-            _addin.UpdateUI();
-        }
+            $if$ ($uiCallbacks$ == true)
+            Globals.ThisAddIn.UpdateUI();
+        $endif$}
 
         private void OnPanelFrameClosed(Visio.Window window)
         {
             _panelFrames.Remove(window.ID);
-
-            _addin.UpdateUI();
-        }
+            $if$ ($uiCallbacks$ == true)
+            Globals.ThisAddIn.UpdateUI();
+        $endif$}
 
         /// <summary>
         /// Returns true if panel is opened in the given Visio diagram window.

@@ -93,7 +93,17 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
   </ItemGroup>
-	$if$ ($commandbars$ == true)
+  <ItemGroup>
+    <None Include="Interop\Office.dll" />
+    <None Include="Interop\Microsoft.Office.Interop.Visio.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="My Project\" />
+    <Compile Include="ThisAddIn.vb">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  $if$ ($commandbars$ == true)
   <ItemGroup>
     <Compile Include="AddinCommandBars.vb" />
   </ItemGroup>
@@ -108,8 +118,6 @@
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="Addin.vb" />
-    <Compile Include="AddinConnect.vb" />
   </ItemGroup>
   $if$ ($taskpane$ == true)
   <ItemGroup>
@@ -128,35 +136,44 @@
   $endif$
   $if$ ($taskpaneANDui$ == true)
   <ItemGroup>
-    <Content Include="Resources\TogglePanel.ico" />
+    <Content Include="Resources\TogglePanel.png" />
   </ItemGroup>
-  $endif$
-  $if$ ($ui$ == true)
+  $endif$ $if$ ($commandbarsANDtaskpane$ == true)
   <ItemGroup>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Content Include="Resources\TogglePanel_sm.png" />
+  </ItemGroup>
+  $endif$ $if$ ($ui$ == true)
+  <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="Resources\Command1.ico" />
-    <Content Include="Resources\Command2.ico" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  $endif$
-  $if$ ($ribbon$ == true)
+  $endif$ $if$ ($ribbon$ == true)
+  <ItemGroup>
+    <Content Include="Resources\Command1.png" />
+  </ItemGroup>
+  $endif$ $if$ ($ribbonXml$ == true)
+  <ItemGroup>
+    <Content Include="Resources\Command2.png" />
+  </ItemGroup>
+  $endif$ $if$ ($commandbars$ == true)
+  <ItemGroup>
+    <Content Include="Resources\Command1_sm.png" />
+    <Content Include="Resources\Command2_sm.png" />
+  </ItemGroup>
+  $endif$ $if$ ($ribbonXml$ == true)
   <ItemGroup>
     <Compile Include="AddinRibbon.vb" />
     <Content Include="Resources\Ribbon.xml" />
   </ItemGroup>
   $endif$
-  <ItemGroup>
-    <None Include="Interop\Office.dll" />
-    <None Include="Interop\Microsoft.Office.Interop.Visio.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

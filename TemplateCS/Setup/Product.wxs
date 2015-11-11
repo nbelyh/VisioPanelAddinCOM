@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+<!-- Wix Project template to install Visio components -->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:visio="http://schemas.microsoft.com/wix/Visio" >
 
   <?define Version="1.0.0.0"?>
   <?define ProductCode = "{$guid7$}" ?>
-
+  
   <?if $(var.Platform)=x64 ?>
   <?define Win64YesNo="yes" ?>
   <?define UpgradeCode = "{$guid5$}" ?>
@@ -19,30 +23,68 @@
 
     <!-- check taht .NET 4 (client profile at least) is installed -->
     <PropertyRef Id="NETFRAMEWORK40CLIENT" />
+    <PropertyRef Id="NETFRAMEWORK40FULL" />
+    <PropertyRef Id="NETFRAMEWORK45" />
+    
     <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK40CLIENT]]>
+      <![CDATA[Installed OR NETFRAMEWORK40CLIENT OR NETFRAMEWORK40 OR NETFRAMEWORK45]]>
     </Condition>
 
+    $if$ ($EnableLicense$ == true)<!-- override default license -->
+    <WixVariable Id="WixUILicenseRtf" Value="$LicenseFileName$" />
+    $endif$
     <!-- allow major upgrades -->
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <!-- allow fast installation -->
+    <Property Id="MSIFASTINSTALL" Value="7" />
 
     <MediaTemplate EmbedCab="yes" />
 
     <Feature Id="ProductFeature" Title="Setup" Level="1">
-      <ComponentRef Id="$csprojectname$.dll" />
-      <ComponentRef Id="$csprojectname$.registration" />
+      $if$ ($addinProject$ == true)<ComponentGroupRef Id="AddinFiles"/>
+      $endif$<ComponentGroupRef Id="VisioFiles"/>
     </Feature>
 
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
-    <UIRef Id="WixUI_InstallDir"/>
+    $if$ ($EnableWixUI$ == true)<!-- UI settings -->
+    <UIRef Id="$WixUI$"/>
+    $endif$$if$ ($WixUI$ == WixUI_InstallDir)<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />$endif$
 
   </Product>
 
+  <!-- Define default directory structure -->
+  
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.pf)">
         <Directory Id="INSTALLFOLDER" Name="$csprojectname$">
 
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Visio files to be included in setup -->
+    <ComponentGroup Id="VisioFiles" Directory="INSTALLFOLDER">
+      $visioFilesWxs$
+      $if$ ($defaultVisioFiles$ == true)<!-- Sample template file. Feel free to modify the optional parameters -->
+      <Component>
+        <File Name="Stencil_1_M.vss">
+          <visio:PublishStencil MenuPath="$csprojectname$\Stencil 1" />
+        </File>
+      </Component>
+      <!-- Sample template file. Feel free to modify the optional parameters -->
+      <Component>
+        <File Name="Template_1_M.vst">
+          <visio:PublishTemplate MenuPath="$csprojectname$\Template 1" />
+        </File>
+      </Component>
+      $endif$
+    </ComponentGroup>
+
+    $if$ ($addinProject$ == true)
+    <!-- Addin files to be included in setup -->
+    <ComponentGroup Id="AddinFiles" Directory="INSTALLFOLDER">
+      
           <Component Id="$csprojectname$.dll" Win64="$(var.Win64YesNo)">
             <Class Id="{$clsid$}" Context="InprocServer32" Description="$progid$" ThreadingModel="both" ForeignServer="mscoree.dll">
               <ProgId Id="$progid$" Description="$progid$" />
@@ -68,9 +110,7 @@
             </RegistryKey>
           </Component>
 
-        </Directory>
-      </Directory>
-    </Directory>
+    </ComponentGroup>
+    $endif$
   </Fragment>
-
 </Wix>

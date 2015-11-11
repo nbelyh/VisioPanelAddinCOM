@@ -43,26 +43,50 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Addin\Addin.vb" />
-    <Content Include="Addin\Addin.vbproj" />
+    <VSTemplate Include="Template.vstemplate">
+      <SubType>Designer</SubType>
+    </VSTemplate>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Addin\Addin.vbproj">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Addin\AddinCommandBars.vb" />
-    <Content Include="Addin\AddinConnect.vb" />
     <Content Include="Addin\AddinRibbon.vb" />
     <Content Include="Addin\PanelFrame.vb" />
     <Content Include="Addin\PanelManager.vb" />
+    <Content Include="Addin\Resources\Command1.png" />
+    <Content Include="Addin\Resources\Command1_sm.png" />
+    <Content Include="Addin\Resources\Command2.png" />
+    <Content Include="Addin\Resources\Command2_sm.png" />
+    <Content Include="Addin\Resources\Ribbon.xml" />
+    <Content Include="Addin\Resources\TogglePanel.png" />
+    <Content Include="Addin\Resources\TogglePanel_sm.png" />
+    <Content Include="Addin\Template.vstemplate" />
     <Content Include="Addin\TheForm.vb" />
     <Content Include="Addin\TheForm.Designer.vb" />
-    <Content Include="Addin\TheForm.resx" />
-    <Content Include="Addin\icon.ico" />
+    <Content Include="Addin\TheForm.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Addin\My Project\Application.myapp" />
+    <Content Include="Addin\My Project\Application.Designer.vb" />
+    <Content Include="Addin\My Project\AssemblyInfo.vb" />
+    <Content Include="Addin\My Project\Resources.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Addin\My Project\Resources.Designer.vb" />
+    <Content Include="Addin\ThisAddIn.vb" />
+    <Content Include="IconVB.ico" />
+    <Content Include="Setup\build\VisioWixExtension.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Addin\Interop\Microsoft.Office.Interop.Visio.dll" />
     <Content Include="Addin\Interop\OFFICE.DLL" />
-    <Content Include="Addin\Resources\Command1.ico" />
-    <Content Include="Addin\Resources\Command2.ico" />
-    <Content Include="Addin\Resources\Ribbon.xml" />
-    <Content Include="Addin\Resources\TogglePanel.ico" />
-    <Content Include="Addin\Template.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Setup\Product.wxs">
       <IncludeInVSIX>true</IncludeInVSIX>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Setup\Setup.vstemplate">
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -70,24 +94,16 @@
     <Content Include="Setup\Setup.wixproj">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Addin\My Project\AssemblyInfo.vb" />
-    <Content Include="Addin\My Project\Resources.resx">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Addin\My Project\Application.Designer.vb" />
-    <Content Include="Addin\My Project\Resources.Designer.vb" />
-    <Content Include="Addin\My Project\Application.myapp" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="Template.vstemplate" />
+    <Content Include="Setup\build\VisioWixExtension.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Setup\Stencil_1_M.vss" />
+    <None Include="Setup\Template_1_M.vst" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -2,7 +2,7 @@
 <VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
   <TemplateData>
     <Name>Extended Visio C# COM Addin Project</Name>
-    <Description>Creates Visio Panel Addin Project</Description>
+    <Description>Creates Extended Visio C# COM Addin Project</Description>
     <ProjectType>CSharp</ProjectType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1001</SortOrder>
@@ -32,8 +32,7 @@
         <ProjectItem ReplaceParameters="false" TargetFileName="Office.dll">Office.dll</ProjectItem>
         <ProjectItem ReplaceParameters="false" TargetFileName="Microsoft.Office.Interop.Visio.dll">Microsoft.Office.Interop.Visio.dll</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="true">AddinConnect.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true">Addin.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true">ThisAddIn.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinCommandBars.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinRibbon.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">PanelFrame.cs</ProjectItem>
