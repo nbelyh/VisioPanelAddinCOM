@@ -9,15 +9,12 @@ $endif$using Visio = Microsoft.Office.Interop.Visio;
 
 namespace $csprojectname$
 {
-    public partial class ThisAddIn
+    public class ThisAddIn
     {
+        public Visio.Application Application { get; set; }
+
         $if$ ($uiCallbacks$ == true)
-        private readonly AddinUI _addinUI = new AddinUI();
-        $endif$$if$ ($ribbonXml$ == true)
-        protected override Office.IRibbonExtensibility CreateRibbonExtensibilityObject()
-        {
-            return _addinUI;
-        }
+        public AddinUI AddinUI { get; set; }
         $endif$$if$ ($ui$ == true)
         /// <summary>
         /// A simple command
@@ -138,8 +135,8 @@ namespace $csprojectname$
         $endif$$if$ ($uiCallbacks$ == true)
         internal void UpdateUI()
         {
-            $endif$$if$ ($commandbars$ == true) _addinUI.UpdateCommandBars();
-            $endif$$if$ ($ribbonXml$ == true)_addinUI.UpdateRibbon();
+            $endif$$if$ ($commandbars$ == true) AddinUI.UpdateCommandBars();
+            $endif$$if$ ($ribbonXml$ == true)AddinUI.UpdateRibbon();
         $endif$$if$ ($uiCallbacks$ == true)}
         $endif$$if$ ($uiCallbacks$ == true)
         private void Application_SelectionChanged(Visio.Window window)
@@ -152,14 +149,14 @@ namespace $csprojectname$
             $if$ ($taskpane$ == true)_panelManager = new PanelManager(this);
             $endif$$if$ ($ribbonANDcommandbars$ == true)var version = int.Parse(Application.Version, NumberStyles.AllowDecimalPoint);
             if (version < 14)
-                $endif$$if$ ($commandbars$ == true)_addinUI.StartupCommandBars("$csprojectname$", new[] { "Command1", "Command2" $endif$$if$ ($commandbarsANDtaskpane$ == true) , "TogglePanel"$endif$$if$ ($commandbars$ == true)});
+                $endif$$if$ ($commandbars$ == true)AddinUI.StartupCommandBars("$csprojectname$", new[] { "Command1", "Command2" $endif$$if$ ($commandbarsANDtaskpane$ == true) , "TogglePanel"$endif$$if$ ($commandbars$ == true)});
             $endif$$if$ ($uiCallbacks$ == true)Application.SelectionChanged += Application_SelectionChanged;
             $endif$
 		}
 
         private void Shutdown()
         {
-            $if$ ($commandbars$ == true)_addinUI.ShutdownCommandBars();
+            $if$ ($commandbars$ == true)AddinUI.ShutdownCommandBars();
             $endif$$if$ ($taskpane$ == true)_panelManager.Dispose();
             $endif$$if$ ($uiCallbacks$ == true)Application.SelectionChanged -= Application_SelectionChanged;
             $endif$
@@ -177,12 +174,18 @@ namespace $csprojectname$
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            Startup(application);
+            ThisAddIn = new ThisAddIn
+            {
+                Application = (Visio.Application) application,
+                AddinUI = this
+            };
+            ThisAddIn.Startup();
         }
 
         public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
         {
-            Shutdown();
+            ThisAddIn.Shutdown();
+            ThisAddIn = null;
         }
 
         public void OnAddInsUpdate(ref Array custom)
