@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>$csprojectguid$</ProjectGuid>
+    <ProjectGuid>$guid1$</ProjectGuid>
     <OutputType>Library</OutputType>
-	<RootNamespace>$csprojectname$</RootNamespace>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>$csprojectname$</AssemblyName>
+	<RootNamespace>$csprojectname$</RootNamespace>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
@@ -139,5 +139,5 @@
     <Content Include="Resources\Ribbon.xml" />
   </ItemGroup>
   $endif$
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

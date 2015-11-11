@@ -2,17 +2,14 @@ $if$ ($uiCallbacks$ == true)Imports System.Drawing
 $endif$$if$ ($ribbonANDcommandbars$ == true)Imports System.Globalization
 $endif$$if$ ($ui$ == true)Imports System.Windows.Forms
 $endif$$if$ ($ui$ == true)Imports Visio = Microsoft.Office.Interop.Visio
+$endif$$if$ ($uiCallbacks$ == true)Imports System.Runtime.InteropServices
 $endif$
-
-<GuidAttribute("$clsid$")> _
-<ProgId("$progid$")> _
 Public Class ThisAddIn
-    Implements IDTExtensibility2
 
-    $if$ ($commandbars$ == true)Private ReadOnly _addinCommandBars As AddinCommandBars = New AddinCommandBars()
-    $endif$$if$ ($ribbonXml$ == true)Private ReadOnly _addinRibbon As AddinRibbon = New AddinRibbon()
+    $if$ ($uiCallbacks$ == true)Private ReadOnly _addinUI As AddinUI = New AddinUI()
+    $endif$$if$ ($ribbonXml$ == true)
     Protected Overrides Function CreateRibbonExtensibilityObject() As Office.IRibbonExtensibility
-        Return _addinRibbon
+        Return _addinUI
     End Function
     $endif$$if$ ($ui$ == true)
     ''' 
@@ -119,12 +116,11 @@ Public Class ThisAddIn
     End Function
     $endif$$if$ ($taskpane$ == true)
     Private _panelManager As PanelManager
-
 	$endif$
 	$if$ ($uiCallbacks$ == true)
     Sub UpdateUI()
-        $endif$$if$ ($commandbars$ == true)_addinCommandBars.UpdateCommandBars()
-        $endif$$if$ ($ribbonXml$ == true)_addinRibbon.UpdateRibbon()
+        $endif$$if$ ($commandbars$ == true)_addinUI.UpdateCommandBars()
+        $endif$$if$ ($ribbonXml$ == true)_addinUI.UpdateRibbon()
     $endif$$if$ ($uiCallbacks$ == true)
     End Sub
     $endif$$if$ ($uiCallbacks$ == true)
@@ -133,40 +129,54 @@ Public Class ThisAddIn
     End Sub
     $endif$
     Sub Startup(app As Object)
-        $if$ ($taskpane$ == true)_panelManager = New PanelManager()
+        $if$ ($taskpane$ == true)_panelManager = New PanelManager(Me)
 		$endif$$if$ ($ribbonANDcommandbars$ == true)Dim version = Integer.Parse(Application.Version, NumberStyles.AllowDecimalPoint)
         If (version < 14) Then
-			$endif$$if$ ($commandbars$ == true)_addinCommandBars.StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
+			$endif$$if$ ($commandbars$ == true)_addinUI.StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
         $endif$$if$ ($ribbonANDcommandbars$ == true)End If
         $endif$$if$ ($uiCallbacks$ == true)AddHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$
     End Sub
 
     Sub Shutdown()
-        $if$ ($commandbars$ == true)_addinCommandBars.ShutdownCommandBars()
+        $if$ ($commandbars$ == true)_addinUI.ShutdownCommandBars()
         $endif$$if$ ($taskpane$ == true)_panelManager.Dispose()
         $endif$$if$ ($uiCallbacks$ == true)RemoveHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$
 	End Sub
 
-#Region "IDTExtensibility2"
-
-    Public Sub OnConnection(app As Object, connectMode As ext_ConnectMode, addInInst As Object, ByRef [custom] As Array) Implements IDTExtensibility2.OnConnection
-        Startup(app)
-    End Sub
-
-    Public Sub OnDisconnection(disconnectMode As ext_DisconnectMode, ByRef custom As Array) Implements IDTExtensibility2.OnDisconnection
-        Shutdown()
-    End Sub
-
-    Public Sub OnAddInsUpdate(ByRef custom As Array) Implements IDTExtensibility2.OnAddInsUpdate
-    End Sub
-
-    Public Sub OnStartupComplete(ByRef custom As Array) Implements IDTExtensibility2.OnStartupComplete
-    End Sub
-
-    Public Sub OnBeginShutdown(ByRef custom As Array) Implements IDTExtensibility2.OnBeginShutdown
-    End Sub
-
-#End Region
 End Class
+$if$ ($uiCallbacks$ == true)
+<ComVisible(True)>
+<GuidAttribute("$clsid$")>
+<ProgId("$progid$")>
+Partial Public Class AddinUI
+    Implements IDTExtensibility2
+
+    ReadOnly Property ThisAddIn() As ThisAddIn
+        Get
+            Return Globals.ThisAddIn
+        End Get
+    End Property
+    #Region "IDTExtensibility2"
+    
+        Public Sub OnConnection(app As Object, connectMode As ext_ConnectMode, addInInst As Object, ByRef [custom] As Array) Implements IDTExtensibility2.OnConnection
+            Startup(app)
+        End Sub
+    
+        Public Sub OnDisconnection(disconnectMode As ext_DisconnectMode, ByRef custom As Array) Implements IDTExtensibility2.OnDisconnection
+            Shutdown()
+        End Sub
+    
+        Public Sub OnAddInsUpdate(ByRef custom As Array) Implements IDTExtensibility2.OnAddInsUpdate
+        End Sub
+    
+        Public Sub OnStartupComplete(ByRef custom As Array) Implements IDTExtensibility2.OnStartupComplete
+        End Sub
+    
+        Public Sub OnBeginShutdown(ByRef custom As Array) Implements IDTExtensibility2.OnBeginShutdown
+        End Sub
+    
+    #End Region
+End Class
+$endif$
