@@ -3,14 +3,13 @@ $endif$$if$ ($ribbonANDcommandbars$ == true)Imports System.Globalization
 $endif$$if$ ($ui$ == true)Imports System.Windows.Forms
 $endif$$if$ ($ui$ == true)Imports Visio = Microsoft.Office.Interop.Visio
 $endif$$if$ ($uiCallbacks$ == true)Imports System.Runtime.InteropServices
-$endif$
+$endif$Imports Extensibility
+
 Public Class ThisAddIn
 
-    $if$ ($uiCallbacks$ == true)Private ReadOnly _addinUI As AddinUI = New AddinUI()
-    $endif$$if$ ($ribbonXml$ == true)
-    Protected Overrides Function CreateRibbonExtensibilityObject() As Office.IRibbonExtensibility
-        Return _addinUI
-    End Function
+    Public Property Application As Visio.Application
+
+    $if$ ($uiCallbacks$ == true)Public Property AddinUI As AddinUI
     $endif$$if$ ($ui$ == true)
     ''' 
     ''' A simple command
@@ -119,12 +118,12 @@ Public Class ThisAddIn
 	$endif$
 	$if$ ($uiCallbacks$ == true)
     Sub UpdateUI()
-        $endif$$if$ ($commandbars$ == true)_addinUI.UpdateCommandBars()
-        $endif$$if$ ($ribbonXml$ == true)_addinUI.UpdateRibbon()
+        $endif$$if$ ($commandbars$ == true)AddinUI.UpdateCommandBars()
+        $endif$$if$ ($ribbonXml$ == true)AddinUI.UpdateRibbon()
     $endif$$if$ ($uiCallbacks$ == true)
     End Sub
     $endif$$if$ ($uiCallbacks$ == true)
-    Public Sub Application_SelectionChanged(Window As Visio.Window)
+    Public Sub Application_SelectionChanged(window As Visio.Window)
         UpdateUI()
     End Sub
     $endif$
@@ -132,14 +131,14 @@ Public Class ThisAddIn
         $if$ ($taskpane$ == true)_panelManager = New PanelManager(Me)
 		$endif$$if$ ($ribbonANDcommandbars$ == true)Dim version = Integer.Parse(Application.Version, NumberStyles.AllowDecimalPoint)
         If (version < 14) Then
-			$endif$$if$ ($commandbars$ == true)_addinUI.StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
+			$endif$$if$ ($commandbars$ == true)AddinUI.StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
         $endif$$if$ ($ribbonANDcommandbars$ == true)End If
         $endif$$if$ ($uiCallbacks$ == true)AddHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$
     End Sub
 
     Sub Shutdown()
-        $if$ ($commandbars$ == true)_addinUI.ShutdownCommandBars()
+        $if$ ($commandbars$ == true)AddinUI.ShutdownCommandBars()
         $endif$$if$ ($taskpane$ == true)_panelManager.Dispose()
         $endif$$if$ ($uiCallbacks$ == true)RemoveHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$
@@ -153,19 +152,20 @@ $if$ ($uiCallbacks$ == true)
 Partial Public Class AddinUI
     Implements IDTExtensibility2
 
-    ReadOnly Property ThisAddIn() As ThisAddIn
-        Get
-            Return Globals.ThisAddIn
-        End Get
-    End Property
+    Property ThisAddIn As ThisAddIn
+
     #Region "IDTExtensibility2"
     
         Public Sub OnConnection(app As Object, connectMode As ext_ConnectMode, addInInst As Object, ByRef [custom] As Array) Implements IDTExtensibility2.OnConnection
-            Startup(app)
+        	ThisAddIn = New ThisAddIn()
+	        ThisAddIn.Application = app
+	        ThisAddIn.AddinUI = Me
+	        ThisAddIn.Startup()
         End Sub
     
         Public Sub OnDisconnection(disconnectMode As ext_DisconnectMode, ByRef custom As Array) Implements IDTExtensibility2.OnDisconnection
-            Shutdown()
+	        ThisAddIn.Shutdown()
+	        ThisAddIn = Nothing
         End Sub
     
         Public Sub OnAddInsUpdate(ByRef custom As Array) Implements IDTExtensibility2.OnAddInsUpdate
