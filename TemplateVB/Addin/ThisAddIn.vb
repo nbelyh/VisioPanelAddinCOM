@@ -1,9 +1,10 @@
+Imports Extensibility
 $if$ ($uiCallbacks$ == true)Imports System.Drawing
 $endif$$if$ ($ribbonANDcommandbars$ == true)Imports System.Globalization
 $endif$$if$ ($ui$ == true)Imports System.Windows.Forms
 $endif$$if$ ($ui$ == true)Imports Visio = Microsoft.Office.Interop.Visio
 $endif$$if$ ($uiCallbacks$ == true)Imports System.Runtime.InteropServices
-$endif$Imports Extensibility
+$endif$
 
 Public Class ThisAddIn
 

@@ -13,8 +13,7 @@ namespace $csprojectname$
     {
         public Visio.Application Application { get; set; }
 
-        $if$ ($uiCallbacks$ == true)
-        public AddinUI AddinUI { get; set; }
+        $if$ ($uiCallbacks$ == true)public AddinUI AddinUI { get; set; }
         $endif$$if$ ($ui$ == true)
         /// <summary>
         /// A simple command

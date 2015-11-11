@@ -80,7 +80,6 @@
       </Component>
       $endif$
     </ComponentGroup>
-
     $if$ ($addinProject$ == true)
     <!-- Addin files to be included in setup -->
     <ComponentGroup Id="AddinFiles" Directory="INSTALLFOLDER">
