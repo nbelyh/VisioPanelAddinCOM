@@ -315,8 +315,7 @@ namespace PanelAddinWizard
 
         public bool IsVstoInstalled()
         {
-            var vstoKey = string.Format(@"HKEY_LOCAL_MACHINE\{0}\Setup\VSTO", _dte.RegistryRoot);
-            return Registry.GetValue(vstoKey, "ProductDir", null) != null;
+            return true;
         }
 
         public void OpenExternalLink(ExternalLink link)
