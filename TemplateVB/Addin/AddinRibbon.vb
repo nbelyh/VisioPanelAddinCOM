@@ -22,23 +22,23 @@ Partial Public Class AddinUI
 #Region "Ribbon Callbacks"
 
     Public Function IsRibbonCommandEnabled(ctrl As Microsoft.Office.Core.IRibbonControl) As Boolean
-        Return ThisAddIn.IsCommandEnabled(ctrl.Id)
+        Return IsCommandEnabled(ctrl.Id)
     End Function
 
     Public Function IsRibbonCommandChecked(ctrl As Microsoft.Office.Core.IRibbonControl) As Boolean
-        Return ThisAddIn.IsCommandChecked(ctrl.Id)
+        Return IsCommandChecked(ctrl.Id)
     End Function
 
     Public Sub OnRibbonButtonCheckClick(control As Microsoft.Office.Core.IRibbonControl, pressed As Boolean)
-        ThisAddIn.OnCommand(control.Id)
+        OnCommand(control.Id)
     End Sub
 
     Public Sub OnRibbonButtonClick(control As Microsoft.Office.Core.IRibbonControl)
-        ThisAddIn.OnCommand(control.Id)
+        OnCommand(control.Id)
     End Sub
 
     Public Function OnGetRibbonLabel(control As Microsoft.Office.Core.IRibbonControl) As String
-        Return ThisAddIn.GetCommandLabel(control.Id)
+        Return GetCommandLabel(control.Id)
     End Function
 
     Public Sub OnRibbonLoad(ribbonUI As Microsoft.Office.Core.IRibbonUI)
@@ -46,7 +46,7 @@ Partial Public Class AddinUI
     End Sub
 
     Public Function GetRibbonImage(control As Microsoft.Office.Core.IRibbonControl) As Bitmap
-        Return ThisAddIn.GetCommandBitmap(control.Id)
+        Return GetCommandBitmap(control.Id)
     End Function
 
 #End Region

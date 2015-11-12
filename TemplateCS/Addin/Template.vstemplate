@@ -32,7 +32,7 @@
         <ProjectItem ReplaceParameters="false">TogglePanel_sm.png</ProjectItem>
         <ProjectItem ReplaceParameters="true">Ribbon.xml</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true">ThisAddIn.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true">Addin.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinCommandBars.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinRibbon.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true">PanelFrame.cs</ProjectItem>

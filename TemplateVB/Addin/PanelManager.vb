@@ -8,23 +8,23 @@ Imports System.Collections.Generic
 Public Class PanelManager
     Implements IDisposable
 
-    Private Property ThisAddIn() As ThisAddIn
+    Private Property Addin() As Addin
 
-    Public Sub New(addIn As ThisAddIn)
-        ThisAddIn = addIn
-        $if$ ($uiCallbacks$ == true)AddHandler ThisAddIn.Application.DocumentCreated, AddressOf OnDocumentListChanged
-        AddHandler ThisAddIn.Application.DocumentOpened, AddressOf OnDocumentListChanged
-        AddHandler ThisAddIn.Application.BeforeDocumentClose, AddressOf OnDocumentListChanged
+    Public Sub New(theAddin As Addin)
+        Addin = theAddin
+        $if$ ($uiCallbacks$ == true)AddHandler Addin.Application.DocumentCreated, AddressOf OnDocumentListChanged
+        AddHandler Addin.Application.DocumentOpened, AddressOf OnDocumentListChanged
+        AddHandler Addin.Application.BeforeDocumentClose, AddressOf OnDocumentListChanged
     $endif$End Sub
 
     Public Sub Dispose() Implements IDisposable.Dispose
-        $if$ ($uiCallbacks$ == true)RemoveHandler ThisAddIn.Application.DocumentCreated, AddressOf OnDocumentListChanged
-        RemoveHandler ThisAddIn.Application.DocumentOpened, AddressOf OnDocumentListChanged
-        RemoveHandler ThisAddIn.Application.BeforeDocumentClose, AddressOf OnDocumentListChanged
+        $if$ ($uiCallbacks$ == true)RemoveHandler Addin.Application.DocumentCreated, AddressOf OnDocumentListChanged
+        RemoveHandler Addin.Application.DocumentOpened, AddressOf OnDocumentListChanged
+        RemoveHandler Addin.Application.BeforeDocumentClose, AddressOf OnDocumentListChanged
     $endif$End Sub
     $if$ ($uiCallbacks$ == true)
     Private Sub OnDocumentListChanged(doc As Microsoft.Office.Interop.Visio.Document)
-        ThisAddIn.UpdateUI()
+        Addin.UpdateUI()
     End Sub
     $endif$
     Private ReadOnly _panelFrames As New Dictionary(Of Integer, PanelFrame)()
@@ -57,13 +57,13 @@ Public Class PanelManager
             _panelFrames.Remove(window.ID)
         End If
         $if$ ($uiCallbacks$ == true)
-        ThisAddIn.UpdateUI()
+        Addin.UpdateUI()
     $endif$End Sub
 
     Private Sub OnPanelFrameClosed(window As Microsoft.Office.Interop.Visio.Window)
         _panelFrames.Remove(window.ID)
         $if$ ($uiCallbacks$ == true)
-        ThisAddIn.UpdateUI()
+        Addin.UpdateUI()
     $endif$End Sub
 
         ''' 

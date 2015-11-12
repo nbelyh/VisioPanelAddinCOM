@@ -99,7 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="My Project\" />
-    <Compile Include="ThisAddIn.vb">
+    <Compile Include="Addin.vb">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

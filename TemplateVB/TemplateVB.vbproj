@@ -75,7 +75,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Addin\My Project\Resources.Designer.vb" />
-    <Content Include="Addin\ThisAddIn.vb" />
+    <Content Include="Addin\Addin.vb" />
     <Content Include="IconVB.ico" />
     <Content Include="Setup\build\VisioWixExtension.dll" />
   </ItemGroup>

@@ -34,7 +34,7 @@
         <ProjectItem ReplaceParameters="false" TargetFileName="Office.dll">Office.dll</ProjectItem>
         <ProjectItem ReplaceParameters="false" TargetFileName="Microsoft.Office.Interop.Visio.dll">Microsoft.Office.Interop.Visio.dll</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="true" OpenInEditor="true">ThisAddin.vb</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true">Addin.vb</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinCommandBars.vb</ProjectItem>
       <ProjectItem ReplaceParameters="true">AddinRibbon.vb</ProjectItem>
       <ProjectItem ReplaceParameters="true">PanelFrame.vb</ProjectItem>

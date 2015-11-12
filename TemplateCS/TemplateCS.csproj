@@ -53,7 +53,7 @@
     <Content Include="Addin\Resources\Command2_sm.png" />
     <Content Include="Addin\Resources\TogglePanel.png" />
     <Content Include="Addin\Resources\TogglePanel_sm.png" />
-    <Content Include="Addin\ThisAddIn.cs" />
+    <Content Include="Addin\Addin.cs" />
     <Content Include="Addin\AddinRibbon.cs" />
     <Content Include="Addin\PanelFrame.cs" />
     <Content Include="Addin\PanelManager.cs" />

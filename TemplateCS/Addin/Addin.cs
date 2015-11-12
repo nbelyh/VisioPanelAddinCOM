@@ -9,12 +9,14 @@ $endif$using Visio = Microsoft.Office.Interop.Visio;
 
 namespace $csprojectname$
 {
-    public class ThisAddIn
+    [ComVisible(true)]
+    [GuidAttribute("$clsid$")]
+    [ProgId("$progid$")]
+    public class Addin : Extensibility.IDTExtensibility2
     {
         public Visio.Application Application { get; set; }
 
-        $if$ ($uiCallbacks$ == true)public AddinUI AddinUI { get; set; }
-        $endif$$if$ ($ui$ == true)
+        $if$ ($ui$ == true)
         /// <summary>
         /// A simple command
         /// </summary>
@@ -160,31 +162,17 @@ namespace $csprojectname$
             $endif$$if$ ($uiCallbacks$ == true)Application.SelectionChanged -= Application_SelectionChanged;
             $endif$
 		}
-	}
-	$if$ ($uiCallbacks$ == true)
-    [ComVisible(true)]
-    [GuidAttribute("$clsid$")]
-    [ProgId("$progid$")]
-    public partial class AddinUI : Extensibility.IDTExtensibility2
-    {
-        ThisAddIn ThisAddIn { get; set; }
-
         #region IDTExtensibility2
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            ThisAddIn = new ThisAddIn
-            {
-                Application = (Visio.Application) application,
-                AddinUI = this
-            };
-            ThisAddIn.Startup();
+            Application = (Visio.Application) application,
+            Startup();
         }
 
         public void OnDisconnection(Extensibility.ext_DisconnectMode disconnectMode, ref Array custom)
         {
-            ThisAddIn.Shutdown();
-            ThisAddIn = null;
+            Shutdown();
         }
 
         public void OnAddInsUpdate(ref Array custom)
@@ -200,6 +188,5 @@ namespace $csprojectname$
         }
 
         #endregion // IDTExtensibility2
-    }
-	$endif$
+	}
 }

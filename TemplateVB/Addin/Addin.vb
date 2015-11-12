@@ -6,7 +6,11 @@ $endif$$if$ ($ui$ == true)Imports Visio = Microsoft.Office.Interop.Visio
 $endif$$if$ ($uiCallbacks$ == true)Imports System.Runtime.InteropServices
 $endif$
 
-Public Class ThisAddIn
+<ComVisible(True)>
+<GuidAttribute("$clsid$")>
+<ProgId("$progid$")>
+Partial Public Class Addin
+    Implements IDTExtensibility2
 
     Public Property Application As Visio.Application
 
@@ -128,7 +132,7 @@ Public Class ThisAddIn
         UpdateUI()
     End Sub
     $endif$
-    Sub Startup(app As Object)
+    Sub Startup()
         $if$ ($taskpane$ == true)_panelManager = New PanelManager(Me)
 		$endif$$if$ ($ribbonANDcommandbars$ == true)Dim version = Integer.Parse(Application.Version, NumberStyles.AllowDecimalPoint)
         If (version < 14) Then
@@ -143,41 +147,28 @@ Public Class ThisAddIn
         $endif$$if$ ($taskpane$ == true)_panelManager.Dispose()
         $endif$$if$ ($uiCallbacks$ == true)RemoveHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$
-	End Sub
+    End Sub
+
+#Region "IDTExtensibility2"
+
+    Public Sub OnConnection(app As Object, connectMode As ext_ConnectMode, addInInst As Object, ByRef [custom] As Array) Implements IDTExtensibility2.OnConnection
+        Application = app
+        Startup()
+    End Sub
+
+    Public Sub OnDisconnection(disconnectMode As ext_DisconnectMode, ByRef custom As Array) Implements IDTExtensibility2.OnDisconnection
+        Shutdown()
+    End Sub
+
+    Public Sub OnAddInsUpdate(ByRef custom As Array) Implements IDTExtensibility2.OnAddInsUpdate
+    End Sub
+
+    Public Sub OnStartupComplete(ByRef custom As Array) Implements IDTExtensibility2.OnStartupComplete
+    End Sub
+
+    Public Sub OnBeginShutdown(ByRef custom As Array) Implements IDTExtensibility2.OnBeginShutdown
+    End Sub
+
+#End Region
 
 End Class
-$if$ ($uiCallbacks$ == true)
-<ComVisible(True)>
-<GuidAttribute("$clsid$")>
-<ProgId("$progid$")>
-Partial Public Class AddinUI
-    Implements IDTExtensibility2
-
-    Property ThisAddIn As ThisAddIn
-
-    #Region "IDTExtensibility2"
-    
-        Public Sub OnConnection(app As Object, connectMode As ext_ConnectMode, addInInst As Object, ByRef [custom] As Array) Implements IDTExtensibility2.OnConnection
-        	ThisAddIn = New ThisAddIn()
-	        ThisAddIn.Application = app
-	        ThisAddIn.AddinUI = Me
-	        ThisAddIn.Startup()
-        End Sub
-    
-        Public Sub OnDisconnection(disconnectMode As ext_DisconnectMode, ByRef custom As Array) Implements IDTExtensibility2.OnDisconnection
-	        ThisAddIn.Shutdown()
-	        ThisAddIn = Nothing
-        End Sub
-    
-        Public Sub OnAddInsUpdate(ByRef custom As Array) Implements IDTExtensibility2.OnAddInsUpdate
-        End Sub
-    
-        Public Sub OnStartupComplete(ByRef custom As Array) Implements IDTExtensibility2.OnStartupComplete
-        End Sub
-    
-        Public Sub OnBeginShutdown(ByRef custom As Array) Implements IDTExtensibility2.OnBeginShutdown
-        End Sub
-    
-    #End Region
-End Class
-$endif$

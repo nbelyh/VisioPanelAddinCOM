@@ -85,7 +85,7 @@
   $endif$
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThisAddIn.cs">
+    <Compile Include="Addin.cs">
       <SubType>Code</SubType>
     </Compile>
     <AppDesigner Include="Properties\" />

@@ -27,27 +27,27 @@ namespace $csprojectname$
 
         public bool IsRibbonCommandEnabled(Office.IRibbonControl ctrl)
         {
-            return ThisAddIn.IsCommandEnabled(ctrl.Id);
+            return IsCommandEnabled(ctrl.Id);
         }
 
         public bool IsRibbonCommandChecked(Office.IRibbonControl ctrl)
         {
-            return ThisAddIn.IsCommandChecked(ctrl.Id);
+            return IsCommandChecked(ctrl.Id);
         }
 
         public void OnRibbonButtonCheckClick(Office.IRibbonControl control, bool pressed)
         {
-            ThisAddIn.OnCommand(control.Id);
+            OnCommand(control.Id);
         }
 
         public void OnRibbonButtonClick(Office.IRibbonControl control)
         {
-            ThisAddIn.OnCommand(control.Id);
+            OnCommand(control.Id);
         }
 
         public string OnGetRibbonLabel(Office.IRibbonControl control)
         {
-            return ThisAddIn.GetCommandLabel(control.Id);
+            return GetCommandLabel(control.Id);
         }
 
         public void OnRibbonLoad(Office.IRibbonUI ribbonUI)
@@ -57,7 +57,7 @@ namespace $csprojectname$
 
         public Bitmap GetRibbonImage(Office.IRibbonControl control)
         {
-            return ThisAddIn.GetCommandBitmap(control.Id);
+            return GetCommandBitmap(control.Id);
         }
 
         #endregion
