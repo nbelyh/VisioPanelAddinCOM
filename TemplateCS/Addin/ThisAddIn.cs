@@ -163,8 +163,8 @@ namespace $csprojectname$
 	}
 	$if$ ($uiCallbacks$ == true)
     [ComVisible(true)]
-    [GuidAttribute("$csprojectguid$")]
-    [ProgId("$csprojectname$.Addin")]
+    [GuidAttribute("$clsid$")]
+    [ProgId("$progid$")]
     public partial class AddinUI : Extensibility.IDTExtensibility2
     {
         ThisAddIn ThisAddIn { get; set; }
