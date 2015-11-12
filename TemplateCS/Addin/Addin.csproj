@@ -74,6 +74,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Interop\Office.dll" />
+    <None Include="Interop\Microsoft.Office.Interop.Visio.dll" />
+  </ItemGroup>
   $if$ ($commandbars$ == true)
   <ItemGroup>
     <Compile Include="AddinCommandBars.cs" />
