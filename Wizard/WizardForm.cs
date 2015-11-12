@@ -60,8 +60,8 @@ namespace PanelAddinWizard
         public bool CommandBars { get { return checkSupportCommandBars.Checked; } }
         public bool AddinEnabled { get { return checkAddinProject.Checked; } }
 
-        public bool RibbonXml { get { return checkSupportRibbon.Checked && radioSupportRibbonXml.Checked; } }
-        public bool RibbonComponent { get { return checkSupportRibbon.Checked && radioSupportRibbonDesigner.Checked; } }
+        public bool RibbonXml { get { return checkSupportRibbon.Checked; } }
+        public bool RibbonComponent { get { return false; } }
 
         public bool WixSetup { get { return checkWixSetup.Checked; } }
 
@@ -82,10 +82,7 @@ namespace PanelAddinWizard
         private Button buttonLicenseFileBrowse;
         private LinkLabel checkEnableSetupUIDescription;
         private OpenFileDialog licenseFileDialog;
-        private Label radioSupportRibbonXmlDescription;
-        private Label radioSupportRibbonDesignerDescription;
-        private RadioButton radioSupportRibbonXml;
-        private RadioButton radioSupportRibbonDesigner;
+        private Label label1;
 
         private OpenFileDialog visioFileDialog;
 
@@ -134,12 +131,9 @@ namespace PanelAddinWizard
             this.licenseFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.addinWizard = new PanelAddinWizard.Wizard();
             this.pageAddin = new PanelAddinWizard.WizardPage();
-            this.radioSupportRibbonXmlDescription = new System.Windows.Forms.Label();
-            this.radioSupportRibbonDesignerDescription = new System.Windows.Forms.Label();
-            this.radioSupportRibbonXml = new System.Windows.Forms.RadioButton();
-            this.radioSupportRibbonDesigner = new System.Windows.Forms.RadioButton();
             this.checkAddinProjectDescription = new System.Windows.Forms.LinkLabel();
             this.checkAddinProject = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.checkSupportTaskPaneDescription = new System.Windows.Forms.Label();
             this.checkSupportTaskPane = new System.Windows.Forms.CheckBox();
             this.checkSupportCommandBarsDescription = new System.Windows.Forms.Label();
@@ -198,12 +192,9 @@ namespace PanelAddinWizard
             // 
             // pageAddin
             // 
-            this.pageAddin.Controls.Add(this.radioSupportRibbonXmlDescription);
-            this.pageAddin.Controls.Add(this.radioSupportRibbonDesignerDescription);
-            this.pageAddin.Controls.Add(this.radioSupportRibbonXml);
-            this.pageAddin.Controls.Add(this.radioSupportRibbonDesigner);
             this.pageAddin.Controls.Add(this.checkAddinProjectDescription);
             this.pageAddin.Controls.Add(this.checkAddinProject);
+            this.pageAddin.Controls.Add(this.label1);
             this.pageAddin.Controls.Add(this.checkSupportTaskPaneDescription);
             this.pageAddin.Controls.Add(this.checkSupportTaskPane);
             this.pageAddin.Controls.Add(this.checkSupportCommandBarsDescription);
@@ -216,48 +207,6 @@ namespace PanelAddinWizard
             this.pageAddin.TabIndex = 11;
             this.pageAddin.Title = "Add-in project";
             // 
-            // radioSupportRibbonXmlDescription
-            // 
-            this.radioSupportRibbonXmlDescription.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.radioSupportRibbonXmlDescription.Location = new System.Drawing.Point(73, 252);
-            this.radioSupportRibbonXmlDescription.Name = "radioSupportRibbonXmlDescription";
-            this.radioSupportRibbonXmlDescription.Size = new System.Drawing.Size(525, 51);
-            this.radioSupportRibbonXmlDescription.TabIndex = 20;
-            this.radioSupportRibbonXmlDescription.Text = resources.GetString("radioSupportRibbonXmlDescription.Text");
-            // 
-            // radioSupportRibbonDesignerDescription
-            // 
-            this.radioSupportRibbonDesignerDescription.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.radioSupportRibbonDesignerDescription.Location = new System.Drawing.Point(73, 207);
-            this.radioSupportRibbonDesignerDescription.Name = "radioSupportRibbonDesignerDescription";
-            this.radioSupportRibbonDesignerDescription.Size = new System.Drawing.Size(525, 22);
-            this.radioSupportRibbonDesignerDescription.TabIndex = 18;
-            this.radioSupportRibbonDesignerDescription.Text = "Adds the builtin visual ribbon designer component to the project";
-            // 
-            // radioSupportRibbonXml
-            // 
-            this.radioSupportRibbonXml.AutoSize = true;
-            this.radioSupportRibbonXml.Checked = true;
-            this.radioSupportRibbonXml.Location = new System.Drawing.Point(51, 232);
-            this.radioSupportRibbonXml.Name = "radioSupportRibbonXml";
-            this.radioSupportRibbonXml.Size = new System.Drawing.Size(159, 17);
-            this.radioSupportRibbonXml.TabIndex = 19;
-            this.radioSupportRibbonXml.TabStop = true;
-            this.radioSupportRibbonXml.Text = "Design ribbon using XML file";
-            this.radioSupportRibbonXml.UseVisualStyleBackColor = true;
-            this.radioSupportRibbonXml.CheckedChanged += new System.EventHandler(this.UpdateButtons);
-            // 
-            // radioSupportRibbonDesigner
-            // 
-            this.radioSupportRibbonDesigner.AutoSize = true;
-            this.radioSupportRibbonDesigner.Location = new System.Drawing.Point(51, 187);
-            this.radioSupportRibbonDesigner.Name = "radioSupportRibbonDesigner";
-            this.radioSupportRibbonDesigner.Size = new System.Drawing.Size(135, 17);
-            this.radioSupportRibbonDesigner.TabIndex = 17;
-            this.radioSupportRibbonDesigner.Text = "Use the builtin designer";
-            this.radioSupportRibbonDesigner.UseVisualStyleBackColor = true;
-            this.radioSupportRibbonDesigner.CheckedChanged += new System.EventHandler(this.UpdateButtons);
-            // 
             // checkAddinProjectDescription
             // 
             this.checkAddinProjectDescription.ForeColor = System.Drawing.SystemColors.GrayText;
@@ -265,10 +214,10 @@ namespace PanelAddinWizard
             this.checkAddinProjectDescription.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.checkAddinProjectDescription.Location = new System.Drawing.Point(32, 100);
             this.checkAddinProjectDescription.Name = "checkAddinProjectDescription";
-            this.checkAddinProjectDescription.Size = new System.Drawing.Size(584, 46);
+            this.checkAddinProjectDescription.Size = new System.Drawing.Size(559, 46);
             this.checkAddinProjectDescription.TabIndex = 16;
-            this.checkAddinProjectDescription.TabStop = true;
-            this.checkAddinProjectDescription.Text = resources.GetString("checkAddinProjectDescription.Text");
+            this.checkAddinProjectDescription.Text = "If you skip the Addin project creation then you can still use this wizard to crea" +
+    "te installer project to install Visio stencils and/or templates.";
             this.checkAddinProjectDescription.UseCompatibleTextRendering = true;
             this.checkAddinProjectDescription.VisitedLinkColor = System.Drawing.SystemColors.HotTrack;
             this.checkAddinProjectDescription.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.checkAddinProjectDescription_LinkClicked);
@@ -284,10 +233,19 @@ namespace PanelAddinWizard
             this.checkAddinProject.UseVisualStyleBackColor = true;
             this.checkAddinProject.CheckedChanged += new System.EventHandler(this.UpdateButtons);
             // 
+            // label1
+            // 
+            this.label1.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label1.Location = new System.Drawing.Point(48, 180);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(380, 24);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Adds support for the ribbon user interface.";
+            // 
             // checkSupportTaskPaneDescription
             // 
             this.checkSupportTaskPaneDescription.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.checkSupportTaskPaneDescription.Location = new System.Drawing.Point(48, 326);
+            this.checkSupportTaskPaneDescription.Location = new System.Drawing.Point(48, 244);
             this.checkSupportTaskPaneDescription.Name = "checkSupportTaskPaneDescription";
             this.checkSupportTaskPaneDescription.Size = new System.Drawing.Size(380, 24);
             this.checkSupportTaskPaneDescription.TabIndex = 12;
@@ -296,7 +254,7 @@ namespace PanelAddinWizard
             // checkSupportTaskPane
             // 
             this.checkSupportTaskPane.AutoSize = true;
-            this.checkSupportTaskPane.Location = new System.Drawing.Point(32, 306);
+            this.checkSupportTaskPane.Location = new System.Drawing.Point(32, 224);
             this.checkSupportTaskPane.Name = "checkSupportTaskPane";
             this.checkSupportTaskPane.Size = new System.Drawing.Size(157, 17);
             this.checkSupportTaskPane.TabIndex = 9;
@@ -307,7 +265,7 @@ namespace PanelAddinWizard
             // checkSupportCommandBarsDescription
             // 
             this.checkSupportCommandBarsDescription.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.checkSupportCommandBarsDescription.Location = new System.Drawing.Point(48, 387);
+            this.checkSupportCommandBarsDescription.Location = new System.Drawing.Point(48, 305);
             this.checkSupportCommandBarsDescription.Name = "checkSupportCommandBarsDescription";
             this.checkSupportCommandBarsDescription.Size = new System.Drawing.Size(380, 24);
             this.checkSupportCommandBarsDescription.TabIndex = 14;
@@ -316,7 +274,7 @@ namespace PanelAddinWizard
             // checkSupportCommandBars
             // 
             this.checkSupportCommandBars.AutoSize = true;
-            this.checkSupportCommandBars.Location = new System.Drawing.Point(32, 367);
+            this.checkSupportCommandBars.Location = new System.Drawing.Point(32, 285);
             this.checkSupportCommandBars.Name = "checkSupportCommandBars";
             this.checkSupportCommandBars.Size = new System.Drawing.Size(247, 17);
             this.checkSupportCommandBars.TabIndex = 11;
@@ -601,12 +559,6 @@ namespace PanelAddinWizard
             checkSupportTaskPaneDescription.ForeColor = checkSupportTaskPane.Enabled ? SystemColors.GrayText : SystemColors.ControlDark;
 
             checkSupportRibbon.Enabled = checkAddinProject.Checked;
-
-            radioSupportRibbonDesigner.Enabled = checkSupportRibbon.Enabled && checkSupportRibbon.Checked;
-            radioSupportRibbonDesignerDescription.ForeColor = radioSupportRibbonDesigner.Enabled ? SystemColors.GrayText : SystemColors.ControlDark;
-
-            radioSupportRibbonXml.Enabled = checkSupportRibbon.Enabled && checkSupportRibbon.Checked;
-            radioSupportRibbonXmlDescription.ForeColor = radioSupportRibbonXml.Enabled ? SystemColors.GrayText : SystemColors.ControlDark;
 
             checkSupportCommandBars.Enabled = checkAddinProject.Checked;
             checkSupportCommandBarsDescription.ForeColor = checkSupportCommandBars.Enabled ? SystemColors.GrayText : SystemColors.ControlDark;
