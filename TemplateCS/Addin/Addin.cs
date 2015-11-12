@@ -12,7 +12,7 @@ namespace $csprojectname$
     [ComVisible(true)]
     [GuidAttribute("$clsid$")]
     [ProgId("$progid$")]
-    public class Addin : Extensibility.IDTExtensibility2
+    public partial class Addin : Extensibility.IDTExtensibility2
     {
         public Visio.Application Application { get; set; }
 
@@ -136,8 +136,8 @@ namespace $csprojectname$
         $endif$$if$ ($uiCallbacks$ == true)
         internal void UpdateUI()
         {
-            $endif$$if$ ($commandbars$ == true) AddinUI.UpdateCommandBars();
-            $endif$$if$ ($ribbonXml$ == true)AddinUI.UpdateRibbon();
+            $endif$$if$ ($commandbars$ == true) UpdateCommandBars();
+            $endif$$if$ ($ribbonXml$ == true)UpdateRibbon();
         $endif$$if$ ($uiCallbacks$ == true)}
         $endif$$if$ ($uiCallbacks$ == true)
         private void Application_SelectionChanged(Visio.Window window)
@@ -150,14 +150,14 @@ namespace $csprojectname$
             $if$ ($taskpane$ == true)_panelManager = new PanelManager(this);
             $endif$$if$ ($ribbonANDcommandbars$ == true)var version = int.Parse(Application.Version, NumberStyles.AllowDecimalPoint);
             if (version < 14)
-                $endif$$if$ ($commandbars$ == true)AddinUI.StartupCommandBars("$csprojectname$", new[] { "Command1", "Command2" $endif$$if$ ($commandbarsANDtaskpane$ == true) , "TogglePanel"$endif$$if$ ($commandbars$ == true)});
+                $endif$$if$ ($commandbars$ == true)StartupCommandBars("$csprojectname$", new[] { "Command1", "Command2" $endif$$if$ ($commandbarsANDtaskpane$ == true) , "TogglePanel"$endif$$if$ ($commandbars$ == true)});
             $endif$$if$ ($uiCallbacks$ == true)Application.SelectionChanged += Application_SelectionChanged;
             $endif$
 		}
 
         public void Shutdown()
         {
-            $if$ ($commandbars$ == true)AddinUI.ShutdownCommandBars();
+            $if$ ($commandbars$ == true)ShutdownCommandBars();
             $endif$$if$ ($taskpane$ == true)_panelManager.Dispose();
             $endif$$if$ ($uiCallbacks$ == true)Application.SelectionChanged -= Application_SelectionChanged;
             $endif$
@@ -166,7 +166,7 @@ namespace $csprojectname$
 
         public void OnConnection(object application, Extensibility.ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            Application = (Visio.Application) application,
+            Application = (Visio.Application) application;
             Startup();
         }
 

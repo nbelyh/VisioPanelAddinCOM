@@ -8,7 +8,7 @@ Imports System.Windows.Forms
 Imports Microsoft.Office.Core
 Imports stdole
 
-Partial Public Class AddinUI
+Partial Public Class Addin
     Private _toolbarName As String
 
     Private ReadOnly _commands As New List(Of String)()

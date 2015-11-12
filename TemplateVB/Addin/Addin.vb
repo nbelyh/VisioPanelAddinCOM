@@ -14,8 +14,7 @@ Partial Public Class Addin
 
     Public Property Application As Visio.Application
 
-    $if$ ($uiCallbacks$ == true)Public Property AddinUI As AddinUI
-    $endif$$if$ ($ui$ == true)
+    $if$ ($ui$ == true)
     ''' 
     ''' A simple command
     ''' 
@@ -123,8 +122,8 @@ Partial Public Class Addin
 	$endif$
 	$if$ ($uiCallbacks$ == true)
     Sub UpdateUI()
-        $endif$$if$ ($commandbars$ == true)AddinUI.UpdateCommandBars()
-        $endif$$if$ ($ribbonXml$ == true)AddinUI.UpdateRibbon()
+        $endif$$if$ ($commandbars$ == true)UpdateCommandBars()
+        $endif$$if$ ($ribbonXml$ == true)UpdateRibbon()
     $endif$$if$ ($uiCallbacks$ == true)
     End Sub
     $endif$$if$ ($uiCallbacks$ == true)
@@ -136,14 +135,14 @@ Partial Public Class Addin
         $if$ ($taskpane$ == true)_panelManager = New PanelManager(Me)
 		$endif$$if$ ($ribbonANDcommandbars$ == true)Dim version = Integer.Parse(Application.Version, NumberStyles.AllowDecimalPoint)
         If (version < 14) Then
-			$endif$$if$ ($commandbars$ == true)AddinUI.StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
+			$endif$$if$ ($commandbars$ == true)StartupCommandBars("$csprojectname$", New String() {"Command1", "Command2"$endif$$if$ ($commandbarsANDtaskpane$ == true), "TogglePanel"$endif$$if$ ($commandbars$ == true)})
         $endif$$if$ ($ribbonANDcommandbars$ == true)End If
         $endif$$if$ ($uiCallbacks$ == true)AddHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$
     End Sub
 
     Sub Shutdown()
-        $if$ ($commandbars$ == true)AddinUI.ShutdownCommandBars()
+        $if$ ($commandbars$ == true)ShutdownCommandBars()
         $endif$$if$ ($taskpane$ == true)_panelManager.Dispose()
         $endif$$if$ ($uiCallbacks$ == true)RemoveHandler Application.SelectionChanged, AddressOf Application_SelectionChanged
         $endif$

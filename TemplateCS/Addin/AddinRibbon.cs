@@ -9,7 +9,7 @@ namespace $csprojectname$
     /// Creates and controls ribbon UI
     /// </summary>
     /// 
-    public partial class AddinUI
+    public partial class Addin
         : Office.IRibbonExtensibility
     {
         private Office.IRibbonUI _ribbon;

@@ -7,7 +7,7 @@ Imports Microsoft.Office.Core
 ''' User interface manager for Visio 2010 and above
 ''' Creates and controls ribbon UI
 ''' 
-Partial Public Class AddinUI
+Partial Public Class Addin
     Implements IRibbonExtensibility
     Private _ribbon As Microsoft.Office.Core.IRibbonUI
 

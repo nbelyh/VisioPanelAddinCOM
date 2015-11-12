@@ -15,7 +15,7 @@ namespace $csprojectname$
     /// Creates and controls a custom command bar with buttons
     /// </summary>
     /// 
-    public partial class AddinUI
+    public partial class Addin
     {
         private string _toolbarName;
 
