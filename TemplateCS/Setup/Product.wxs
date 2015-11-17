@@ -30,8 +30,8 @@
       <![CDATA[Installed OR NETFRAMEWORK40CLIENT OR NETFRAMEWORK40 OR NETFRAMEWORK45]]>
     </Condition>
 
-    $if$ ($EnableLicense$ == true)<!-- override default license -->
-    <WixVariable Id="WixUILicenseRtf" Value="$LicenseFileName$" />
+    $if$ ($EnableWixUI$ == true)<!-- override default license -->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
     $endif$
     <!-- allow major upgrades -->
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -47,8 +47,23 @@
     </Feature>
 
     $if$ ($EnableWixUI$ == true)<!-- UI settings -->
-    <UIRef Id="$WixUI$"/>
-    $endif$$if$ ($WixUI$ == WixUI_InstallDir)<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />$endif$
+    <UI>
+      <UIRef Id="$WixUI$"/>
+      $endif$$if$ ($WixUI$ == WixUI_InstallDir)<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+      $endif$$if$ ($WixUI$ == WixUI_InstallDirNoLicense)
+      <!-- Skip license dialog -->
+      <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+      <Publish Dialog="WelcomeDlg"
+               Control="Next"
+               Event="NewDialog"
+               Value="InstallDirDlg"
+               Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg"
+               Control="Back"
+               Event="NewDialog"
+               Value="WelcomeDlg"
+               Order="2">1</Publish>
+    $endif$</UI>
 
   </Product>
 
@@ -84,11 +99,11 @@
     <!-- Addin files to be included in setup -->
     <ComponentGroup Id="AddinFiles" Directory="INSTALLFOLDER">
       
-          <Component Id="$csprojectname$.dll" Win64="$(var.Win64YesNo)">
+          <Component Win64="$(var.Win64YesNo)">
+            <File Source="$(var.$csprojectname$.TargetPath)" />
             <Class Id="{$clsid$}" Context="InprocServer32" Description="$progid$" ThreadingModel="both" ForeignServer="mscoree.dll">
               <ProgId Id="$progid$" Description="$progid$" />
             </Class>
-            <File Id="$csprojectname$.dll" KeyPath="yes" Source="$(var.$csprojectname$.TargetPath)" />
             <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
             <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32\1.0.0.0" Name="Class" Value="$csprojectname$.Addin" Type="string" Action="write" />
             <RegistryValue Root="HKCR" Key="CLSID\{$clsid$}\InprocServer32\1.0.0.0" Name="Assembly" Value="$csprojectname$, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Type="string" Action="write" />
@@ -101,9 +116,9 @@
             <RegistryValue Root="HKCR" Key="Component Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Name="0" Value=".NET Category" Type="string" Action="write" />
           </Component>
 
-          <Component Id="$csprojectname$.registration" Win64="$(var.Win64YesNo)">
-            <RegistryKey Root="HKMU" Key="Software\Microsoft\Visio\Addins\$progid$">
-              <RegistryValue Name="CommandLineSafe" Type="integer" Value="0" />
+          <Component Win64="$(var.Win64YesNo)">
+            <RegistryKey Root="HKLM" Key="Software\Microsoft\Visio\Addins\$progid$">
+              <RegistryValue Name="CommandLineSafe" Type="integer" Value="1" />
               <RegistryValue Name="FriendlyName" Type="string" Value="$csprojectname$" KeyPath="yes" />
               <RegistryValue Name="LoadBehavior" Type="integer" Value="3" />
             </RegistryKey>
