@@ -5,7 +5,7 @@ namespace VisioWixExtension
 {
     public class VisioWixExtension : WixExtension 
     {
-        private RowGenerator _compilerExtensionExtension;
+        private VisioCompilerExtension _compilerExtensionExtension;
 
         /// <summary>
         /// Gets the optional compiler extension.
@@ -16,9 +16,59 @@ namespace VisioWixExtension
             get
             {
                 if (null == _compilerExtensionExtension)
-                    _compilerExtensionExtension = new RowGenerator();
+                    _compilerExtensionExtension = new VisioCompilerExtension();
 
                 return _compilerExtensionExtension;
+            }
+        }
+
+        private VisioDecompilerExtension _decompilerExtension;
+
+        /// <summary>
+        /// Gets the optional decompiler extension.
+        /// </summary>
+        /// <value>The optional decompiler extension.</value>
+        public override DecompilerExtension DecompilerExtension
+        {
+            get
+            {
+                if (null == _decompilerExtension)
+                {
+                    _decompilerExtension = new VisioDecompilerExtension();
+                }
+
+                return _decompilerExtension;
+            }
+        }
+
+        private VisioBinderExtension _binderExtension;
+
+        /// <summary>
+        /// Gets the optional binder extension.
+        /// </summary>
+        /// <value>The optional binder extension.</value>
+        public override BinderExtension BinderExtension
+        {
+            get
+            {
+                if (null == _binderExtension)
+                {
+                    _binderExtension = new VisioBinderExtension();
+                }
+
+                return _binderExtension;
+            }
+        }
+
+        private TableDefinitionCollection _tableDefinitions;
+
+        public override TableDefinitionCollection TableDefinitions
+        {
+            get {
+                if (null == _tableDefinitions)
+                    _tableDefinitions = LoadTableDefinitionHelper(Assembly.GetExecutingAssembly(), "VisioWixExtension.Data.Tables.xml");
+
+                return _tableDefinitions;
             }
         }
 

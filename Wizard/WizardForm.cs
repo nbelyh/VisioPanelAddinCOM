@@ -87,11 +87,12 @@ namespace PanelAddinWizard
         {
             return new WixSetupOptions
             {
-                EnableWixSetup = checkAddVisioFiles.Checked,
-                CreateNewVisioFiles = radioCreateNewVisioFiles.Checked,
-                DuplicateExistingVisioFiles = checkCopyVisioFiles.Checked,
+                EnableWixSetup = checkWixSetup.Checked,
+                AddVisioFiles = checkWixSetup.Checked && checkAddVisioFiles.Checked,
+                CreateNewVisioFiles = checkAddVisioFiles.Checked && radioCreateNewVisioFiles.Checked,
+                DuplicateExistingVisioFiles = checkAddVisioFiles.Checked && checkCopyVisioFiles.Checked,
                 VisioFilePaths = visioFileDialog.FileNames,
-                EnableWixUI = checkEnableSetupUI.Checked,
+                EnableWixUI = checkWixSetup.Checked && checkEnableSetupUI.Checked,
                 WixUI = comboSetupUI.Text
             };
         }
@@ -228,7 +229,8 @@ namespace PanelAddinWizard
             "WixUI_Minimal",
             "WixUI_InstallDir",
             "WixUI_InstallDirNoLicense",
-            "WixUI_Mondo"});
+            "WixUI_Mondo",
+            "WixUI_Advanced"});
             this.comboSetupUI.Location = new System.Drawing.Point(48, 364);
             this.comboSetupUI.Name = "comboSetupUI";
             this.comboSetupUI.Size = new System.Drawing.Size(262, 21);
